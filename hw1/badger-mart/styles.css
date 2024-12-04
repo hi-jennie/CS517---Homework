@@ -21,10 +21,17 @@ table, th, td {
 }
 
 /* TODO: Add your primary and secondary styling below! */
-.primary-button {
-
+.primary-button, .apply-button {
+  background-color:rgb(46, 171, 46);
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: 1px;
+  color: white;
 }
 
 .secondary-button {
-  
+  background-color: rgb(249, 249, 249);
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: 1px solid #E0E0E0;
 }
