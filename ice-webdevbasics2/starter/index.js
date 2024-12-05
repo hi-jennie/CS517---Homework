@@ -1,11 +1,11 @@
 // This is where your JS goes!
 
-// You can fetch data from https://cs571api.cs.wisc.edu/rest/f24/ice/chili
+// You can fetch data from https://cs571.org/rest/f24/ice/chili
 // When you are complete, you should also be able to fetch data from...
-//  https://cs571api.cs.wisc.edu/rest/f24/ice/pasta
-//  https://cs571api.cs.wisc.edu/rest/f24/ice/pizza
+//  https://cs571.org/rest/f24/ice/pasta
+//  https://cs571.org/rest/f24/ice/pizza
 
-const reviewNum = 0;
+let reviewNum = 0;
 
 const BASE_AMNS = [1, 15, 14.5, 2, 1, 1, 1]
 const REVIEWS = [
@@ -18,6 +18,23 @@ const REVIEWS = [
 
 // TODO Implement the update yield!
 function updateYield() {
+    console.log(1);
+    const selectValue = parseInt(document.getElementById("serving-selector").value);
+    const tableBody = document.getElementById("ingredients-body");
+    const rows = tableBody.getElementsByClassName("important-ingredient");
+    // teacher's solution
+    for (let i = 0; i <rows.length; i++) {
+        const priceTd = rows[i].getElementsByTagName("td")[0];
+        priceTd.innerText = (BASE_AMNS[i] * selectValue).toString();
+    }
+
+    // let i = 0;
+    // for (const row of rows) {
+    //     const priceTd = row.getElementsByTagName("td")[0];
+    //     priceTd.innerText = BASE_AMNS[i] * selectValue;
+    //     i++;
+    // }
+
     alert("I should update the yield!");
 }
 
