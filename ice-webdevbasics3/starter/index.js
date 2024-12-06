@@ -21,6 +21,15 @@ fetch('https://cs571.org/rest/f24/ice/chili', {
         console.log(txt);
     });
 
+    // some and every 
+    console.log(data.reviews.some(rev => rev.rating === 5)); // true 
+    console.log(data.reviews.every(rev => rev.rating === 5)); // false
+
+    // reduce (average rating)
+    const ratingList = data.reviews.map(rev => rev.rating);
+    const averageRating = (ratingList.reduce((prev,curr) => prev + curr, 0))/ratingList.length;
+    console.log(averageRating);
+
     console.log("!the main ingredients are...!");
     data.recipe.map(rec => {
         return rec.split(":")[0];       
@@ -30,7 +39,31 @@ fetch('https://cs571.org/rest/f24/ice/chili', {
     Object.keys(data.ingredients).map(keyName => {
         console.log(data.ingredients[keyName].amount + keyName);
     })
+
+    // reduce():remove duplicate unit
+    // curr is the key of data.ingredients
+    const uniUnits = Object.keys(data.ingredients).reduce((acc,curr)=>{
+        const currIngreObj = data.ingredients[curr];
+        if(currIngreObj.unit && !acc.includes(currIngreObj.unit)){
+            acc.push(currIngreObj.unit);
+        }
+        // return value is essential
+        return acc;
+    },[]) // [] is the initial value of acc;
+    console.log(uniUnits);
 })
 // .catch(err => {
 //     alert("Uh oh! Something went wrong. Are you logged in with your Badger ID?")
 // })
+
+
+
+// reduce function example
+
+const numList = [1,2,34,5,7,8];
+// taking in 2 parameters, the first is a callback function;
+// the second is the staring value;
+const total = numList.reduce((prev, cur) => prev + cur, 1.2)
+console.log(total);
+// actually here : prev + cur is the return value
+// the return value will be assign to prev of the next round;
