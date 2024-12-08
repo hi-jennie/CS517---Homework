@@ -13,7 +13,7 @@ function buildStudents(data) {
 		const studentContainer = document.createElement("div");
 		// col-4 意味着这个元素占用 12 列中的 4 列，即 一行最多可以容纳 3 个元素（12 ÷ 4 = 3）。
 		// p-3 : padding 
-		studentContainer.classList.add("col-4", "mb-4", "p-3", "border", "rounded", "bg-light"); 
+		studentContainer.classList.add("col-12", "col-sm-12", "col-md-6", "col-lg-4", "col-xl-3", "mb-4", "border","rounded","bg-light"); 
 
 		const nameElem = document.createElement("h3");
 		const majorElem = document.createElement("strong");
