@@ -30,6 +30,9 @@ function buildStudents(data) {
 
 		curStudent.interests.forEach(interest => {
 			const interestElem = document.createElement("li");
+			interestElem.addEventListener("click", ()=>{
+				searchSameInterest(interest)
+			})
 			interestElem.innerText = interest;
 			interestsElem.appendChild(interestElem);
 		})
@@ -60,7 +63,7 @@ function handleSearch(e) {
 		return res.json();
 	}).then(data => {
 		const originStudentsArr = data;
-		
+		// this is truly key point of the searching process;
 		const filteredData = originStudentsArr.filter(student => {
 			const nameMatch = nameValue ? `${student.name.first} ${student.name.last}`.toLowerCase().includes(nameValue.toLowerCase()) : true;
 
@@ -79,11 +82,18 @@ function handleSearch(e) {
 	})
 }
 
+function searchSameInterest(interest){
+	console.log(1);
+	document.getElementById("search-name").value = "";
+	document.getElementById("search-major").value = "";
+	document.getElementById("search-interest").value = interest;
+	handleSearch();
+}
+
 document.getElementById("search-btn").addEventListener("click", handleSearch);
 
-function fetchData(){
-	
-}
+
+
 
 fetch("https://cs571.org/rest/f24/hw2/students", {
 	headers: {
@@ -96,3 +106,10 @@ fetch("https://cs571.org/rest/f24/hw2/students", {
 	buildStudents(data);
 })
 
+// my first thought!!! which proves wrong;
+// Array.from(document.getElementsByTagName("li")).forEach((elem) => {
+//     elem.addEventListener("click", () => {
+//         searchSameInterest(elem.id);
+//     });
+// });
+// console.log(document.getElementsByTagName("li"));
