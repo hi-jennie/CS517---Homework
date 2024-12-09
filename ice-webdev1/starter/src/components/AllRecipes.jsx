@@ -13,11 +13,33 @@ const RECIPE_PASTA = JSON.parse(`{"name":"Classic Spaghetti Carbonara","author":
 // Taken from https://cs571api.cs.wisc.edu/rest/f24/ice/chili
 const RECIPE_CHILI = JSON.parse(`{"name":"7-Ingredient Chili","author":"OpenAI","img":{"location":"https://raw.githubusercontent.com/CS571-F24/ice-api-static-content/main/chili.png","description":"A delicious bowl of chili!"},"keywords":["hearty","flavorful","simple","comforting"],"reviews":[{"txt":"A burst of warmth and flavor in every spoonful; simple yet irresistible!","rating":5},{"txt":"The perfect blend of spice and comfort, an easy go-to chili recipe.","rating":4},{"txt":"Loved the hearty texture and rich taste - a new family favorite!","rating":5},{"txt":"Quick, flavorful, and satisfying - this chili hits all the right notes!","rating":5}],"ingredients":{"ground beef":{"amount":1,"unit":"lb"},"kidney beans":{"amount":15,"unit":"oz","misc":"drained and rinsed"},"diced tomatoes":{"amount":14.5,"unit":"oz","misc":"with juice"},"chili powder":{"amount":2,"unit":"tablespoon"},"onion":{"amount":1,"misc":"diced"},"bell pepper":{"amount":1,"misc":"diced"},"ground cumin":{"amount":1,"unit":"teaspoon"}},"recipe":["Cook Meat with Vegetables: In a large pot, cook the ground beef, diced onion, and diced bell pepper over medium heat until the meat is no longer pink and the vegetables are softened.","Add Remaining Ingredients: To the pot, add the kidney beans, diced tomatoes (with their juice), chili powder, ground cumin, and salt to taste. If the chili is too thick, add a little water to reach your desired consistency.","Simmer: Bring the mixture to a boil, then reduce the heat and simmer for about 20-30 minutes to allow the flavors to meld. Stir occasionally.","Serve: Enjoy your chili as is, or with toppings like shredded cheese or sour cream."]}`);
 
-export default function AllRecipes(props) {
+export default function AllRecipes() {
+    const [chili, setChili] = useState();
+
+    // this useEffect will be executed only once when the component is mounted
+    useEffect(() => {
+        fetch("https://cs571.org/rest/f24/ice/chili", {
+            headers: {
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
+            }
+        }).then(res => {
+            console.log(res.status);
+            return res.json(); // returns a promise
+        }).then(data => {
+            console.log(data);
+            setChili(data);
+        })
+    },[]);
+
     return <div>
         <h1>Welcome to Badger Recipes!</h1>
+        {chili ? <Recipe recipe={chili}/> : <p>recipe is still loading.....</p>}
         <Recipe recipe={RECIPE_PIZZA}/>
         <Recipe recipe={RECIPE_PASTA}/>
         <Recipe recipe={RECIPE_CHILI}/>
+
+
+        {/* syntactic sugar */}
+        {/* <Recipe {...RECIPE_PIZZA}/> */}
     </div>
 }
