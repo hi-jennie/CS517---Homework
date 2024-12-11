@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Recipe from "./Recipe";
+import { Container, Row, Col, Pagination } from "react-bootstrap";
 
 import Stopwatch from "../utils/Stopwatch";
 
@@ -10,6 +11,7 @@ export default function AllRecipes(props) {
 
     // it's better to assign a default value to the state variable
     const [recipes, setRecipes] = useState([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         fetch("https://cs571.org/rest/f24/ice/all-recipes",{
@@ -40,10 +42,23 @@ export default function AllRecipes(props) {
         })
 
     })
+    
+
     return <div>
         <h1>Welcome to Badger Recipes!</h1>
-        {recipes.map(re => <Recipe key={re.name}  {...re}/>)}
-    </div>
+        <Container>
+            <Row>
+                {recipes.slice((page-1)*3, page*3).map(re => <Col key={re.name} xm={12} md={6} lg={3}>
+                    <Recipe {...re}/>
+                </Col>)}
+            </Row>
+            <Pagination>
+                <Pagination.Item active={page === 1} onClick={() => setPage(1)}>1</Pagination.Item>
+                <Pagination.Item active={page === 2} onClick={() => setPage(2)}>2</Pagination.Item>
+            </Pagination>
+        </Container>
+        
+        </div>
 
 
     // Is there a better way to do this? We'll explore this today!
