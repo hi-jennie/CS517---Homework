@@ -7,7 +7,7 @@ import Stopwatch from "../utils/Stopwatch";
 
 Stopwatch.start();
 
-export default function AllRecipes(props) {
+export default function AllRecipes() {
 
     // it's better to assign a default value to the state variable
     const [recipes, setRecipes] = useState([]);

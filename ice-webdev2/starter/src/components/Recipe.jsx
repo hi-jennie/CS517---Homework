@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import Stopwatch from "../utils/Stopwatch";
+import PropTypes from "prop-types";
 
 export default function Recipe(props) {
 
@@ -42,3 +43,13 @@ export default function Recipe(props) {
         }
     </Card>
 }
+
+Recipe.propTypes = {
+    name: PropTypes.string,
+    img: PropTypes.shape({
+        location: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired
+    }).isRequired,
+    author: PropTypes.string.isRequired,
+    keywords: PropTypes.arrayOf(PropTypes.string).isRequired
+};
