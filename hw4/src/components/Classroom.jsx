@@ -1,5 +1,6 @@
-import { Button, Container, Form, Row } from "react-bootstrap";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import Student from './Student.jsx'
 const Classroom = () => {
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
@@ -80,8 +81,15 @@ const Classroom = () => {
         <br />
         <Button variant="neutral">Reset Search</Button>
       </Form>
+      <p>There are {filteredData.length} student(s) matching your search</p>
       <Container fluid>
-        <Row>{/* TODO Students go here! */}</Row>
+        <Row>
+          {filteredData.map(student => {
+            return  <Col key={student.id} sm={12} md={6} lg={4} xl={3}>
+              <Student {...student}/>
+            </Col>
+          })}
+        </Row>
       </Container>
     </div>
   );
