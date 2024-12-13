@@ -1,4 +1,4 @@
-import { Button, Container, Form, Row, Col } from "react-bootstrap";
+import { Button, Container, Form, Row, Col, Pagination } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import Student from './Student.jsx'
 const Classroom = () => {
@@ -6,6 +6,7 @@ const Classroom = () => {
   const [name, setName] = useState("");
   const [major, setMajor] = useState("");
   const [interest, setInterest] = useState("");
+  const [page, setPage] = useState(0);
 
   const handleChange = (e) => {
     if (e.target.id === "searchName") {
@@ -34,6 +35,11 @@ const Classroom = () => {
       });
   }, []);
 
+  useEffect(() => {
+    // 每当筛选条件（name、major、interest）变化时，将页面重置为第一页
+    setPage(1);
+  }, [name, major, interest]);
+
   console.log(students);
   let filteredData = students.filter((student) => {
     const nameMatch = name
@@ -53,6 +59,34 @@ const Classroom = () => {
   });
 
   console.log(filteredData);
+  const handleResearch = () => {
+    setName("");
+    setMajor("");
+    setInterest("");
+  }
+
+  const pageNum = filteredData.length % 24 === 0 ? filteredData.length / 24 : Math.ceil(filteredData.length / 24);
+
+  const pagItemsElem = ((pageNum) => {
+    const paginationList = [];
+    for(let i = 1; i <= pageNum; i++){
+      paginationList.push(<Pagination.Item active={page === i} onClick={() => setPage(i)}>{i}</Pagination.Item>)
+    }
+
+    return paginationList;
+  })(pageNum);
+  console.log(page);
+
+  const addAndMinusPage = (p) => {
+    if(p < 1){
+      setPage(1)
+    }
+    if(p > pageNum){
+      setPage(pageNum)
+    }else{
+      setPage(p);
+    }
+  }
 
   return (
     <div>
@@ -79,18 +113,24 @@ const Classroom = () => {
           onChange={(e) => handleChange(e)}
         />
         <br />
-        <Button variant="neutral">Reset Search</Button>
+        <Button variant="neutral" onClick={handleResearch}>Reset Search</Button>
       </Form>
       <p>There are {filteredData.length} student(s) matching your search</p>
       <Container fluid>
         <Row>
-          {filteredData.map(student => {
+          {filteredData.slice((page-1) * 24, page * 24).map(student => {
             return  <Col key={student.id} sm={12} md={6} lg={4} xl={3}>
               <Student {...student}/>
             </Col>
           })}
         </Row>
+        <Pagination>
+          <Pagination.Item disabled={page === 1} onClick={() => addAndMinusPage(page -1)}>Previous</Pagination.Item>
+          {pagItemsElem}
+          <Pagination.Item disabled={page === pageNum} onClick={() => addAndMinusPage(page + 1)}>Next</Pagination.Item>
+      </Pagination>
       </Container>
+      
     </div>
   );
 };
