@@ -113,7 +113,7 @@ const Classroom = () => {
           onChange={(e) => handleChange(e)}
         />
         <br />
-        <Button variant="neutral" onClick={handleResearch}>Reset Search</Button>
+        <Button variant="primary" onClick={handleResearch}>Reset Search</Button>
       </Form>
       <p>There are {filteredData.length} student(s) matching your search</p>
       <Container fluid>
