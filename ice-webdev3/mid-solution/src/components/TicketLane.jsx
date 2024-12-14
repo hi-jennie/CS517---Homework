@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Col, Row } from "react-bootstrap"
 import Ticket from "./Ticket";
 
@@ -12,12 +13,13 @@ const TicketLane = (props) => {
                         xs={6}
                         md={4}
                         lg={3}
-                        xxl={2}
+                        xl={3}
                         key={tick.id}
                     >
                         <Ticket 
                             {...tick}
                             status={props.status}
+                            move={props.moveItem}
                         />
                     </Col>
                 })
