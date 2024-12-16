@@ -7,10 +7,10 @@ export default function BadgerBudSummary(props) {
         setShowMore(!showMore);
         if(e.target.innerText === "Show More"){
             e.target.innerText = "Show Less";
-        }
-        
+        }else{
+            e.target.innerText = "Show More";
+        }  
     }
-
 
     return <Card className="d-flex flex-column">
         <img 
