@@ -1,7 +1,18 @@
 /* eslint-disable react/prop-types */
 import {Button, Card} from "react-bootstrap"
+import {useState} from "react"
 export default function BadgerBudSummary(props) {
-    return <Card className="d-flex flex-column align-items-center ">
+    const [showMore, setShowMore] = useState(false);
+    const handleShowMore = (e) =>{
+        setShowMore(!showMore);
+        if(e.target.innerText === "Show More"){
+            e.target.innerText = "Show Less";
+        }
+        
+    }
+
+
+    return <Card className="d-flex flex-column">
         <img 
             src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${props.imgIds[0]}`} 
             style={{
@@ -11,10 +22,18 @@ export default function BadgerBudSummary(props) {
               }}
             alt={`A picture of ${props.name}`}
         />
-        <h2>{props.name}</h2>
-        <div style={{display: "flex", justifyContent:"center",padding:"10px", width:" 100%", gap: "10px", backgroundColor: "#f5f5f5"}}>
-            <Button>show more</Button>
-            <Button variant="secondary">💗save</Button>
+
+        <h2 style={{padding:"15px"}}>{props.name}</h2>
+        { showMore ? <div style={{padding:"15px", color: "#495057"}}>
+            <p>{props.gender}</p>
+            <p>{props.breed}</p>
+            <p>{props.age}</p>
+            {props.description && <p>{props.description}</p>}
+        </div> : ""}
+
+        <div style={{display: "flex",padding:"15px", width:" 100%", gap: "10px", backgroundColor: "#f5f5f5"}}>
+            <Button onClick={(e) => handleShowMore(e)}>Show More</Button>
+            <Button variant="secondary">💗Save</Button>
         </div>
 
     </Card>

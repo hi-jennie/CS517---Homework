@@ -10,7 +10,7 @@ export default function BadgerBudsAdoptable(props) {
         <Container fluid>
             <Row>
                 {buds.map(bud => (
-                    <Col sm={12} md={6} lg={4} xl={3} xxl={2} key={bud.id} >
+                    <Col sm={12} md={6} lg={4} xl={3} xxl={4} key={bud.id} >
                             <BadgerBudSummary {...bud} />
                     </Col>
                 ))}
