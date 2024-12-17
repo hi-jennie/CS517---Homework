@@ -5,6 +5,7 @@ import BadgerBudsLanding from "./pages/BadgerBudsLanding"
 import BadgerBudsAdoptable from "./pages/BadgerBudsAdoptable"
 import BadgerBudsBasket from "./pages/BadgerBudsBasket"
 import BadgerBudsNoMatch from "./pages/BadgerBudsNoMatch"
+import MyAdoption from "./pages/MyAdoption";
 
 
 export default function BadgerBudsRouter() {
@@ -15,6 +16,7 @@ export default function BadgerBudsRouter() {
                 {/* TODO: Add your routes here! */}
                 <Route path="/available-cats" element={<BadgerBudsAdoptable />}/>
                 <Route path="/basket" element={<BadgerBudsBasket />}/>
+                <Route path="/myAdoption" element={<MyAdoption />}/>
                 <Route path="*" element={<BadgerBudsNoMatch />}/>
             </Route>
         </Routes>

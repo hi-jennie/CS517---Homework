@@ -16,14 +16,15 @@ export default function BasketItem(props) {
     }
 
     const handleAdopt =(id) => {
-        const myCatsIds = JSON.parse(sessionStorage.getItem("myCatsIds")) || []
-        if(!myCatsIds.includes(id)){
-            const catObj = props.buds.filter(bud => bud.id === id)[0];
-            const updatedMyCats = [...myCatsIds, catObj];
-            sessionStorage.setItem("myCatsIds", JSON.stringify(updatedMyCats));
-            console.log(JSON.parse(sessionStorage.getItem("myCatsIds")));
-            alert(`${props.name} has been adopted!`)
-        }
+        const myCats = JSON.parse(sessionStorage.getItem("myCats")) || []
+        
+        const catObj = props.buds.filter(bud => bud.id === id)[0];
+        const updatedMyCats = [...myCats, catObj];
+        sessionStorage.setItem("myCats", JSON.stringify(updatedMyCats));
+        console.log("my adopted cats...")
+        console.log(JSON.parse(sessionStorage.getItem("myCats")));
+        alert(`${props.name} has been adopted!`)
+        
         
 
         const localSavedIds = JSON.parse(sessionStorage.getItem("savedCatIds"));
@@ -47,7 +48,6 @@ export default function BasketItem(props) {
         <Button variant="secondary" onClick={() => handleUnselect(props.id) }>unselect</Button>
         <Button variant="success" onClick={() => handleAdopt(props.id) }> ❤️ adopt</Button>
     </div>
-    {}
 
 </Card>
 }
