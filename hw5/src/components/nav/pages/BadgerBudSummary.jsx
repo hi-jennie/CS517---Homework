@@ -12,6 +12,20 @@ export default function BadgerBudSummary(props) {
         }  
     }
 
+    const handleSave = (id, name) => {
+        const savedCatIds = JSON.parse(sessionStorage.getItem("savedCatIds"))|| [];
+        if (!savedCatIds.includes(id)) {
+            const updatedCatIds = [...savedCatIds, id];
+            sessionStorage.setItem("savedCatIds", JSON.stringify(updatedCatIds));
+            alert(`${name} has been added to your basket!`)
+        }
+
+        const localAdoptableBuds = JSON.parse(sessionStorage.getItem("adoptableBuds"));
+        const updatedAdoptableBuds = localAdoptableBuds.filter(bud => bud.id !== id);
+        sessionStorage.setItem("adoptableBuds", JSON.stringify(updatedAdoptableBuds));
+        props.setAdoptableBuds(updatedAdoptableBuds);
+        
+    }
     return <Card className="d-flex flex-column">
         <img 
             src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${props.imgIds[0]}`} 
@@ -33,7 +47,7 @@ export default function BadgerBudSummary(props) {
 
         <div style={{display: "flex",padding:"15px", width:" 100%", gap: "10px", backgroundColor: "#f5f5f5"}}>
             <Button onClick={(e) => handleShowMore(e)}>Show More</Button>
-            <Button variant="secondary">💗Save</Button>
+            <Button onClick={() => handleSave(props.id, props.name)} variant="secondary">💗Save</Button>
         </div>
 
     </Card>

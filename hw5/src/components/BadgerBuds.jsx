@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import BadgerBudsNavbar from "./nav/BadgerBudsNavbar";
 import BadgerBudsDataContext from "../contexts/BadgerBudsDataContext";
-import BadgerBudsAdoptable from "./nav/pages/BadgerBudsAdoptable";
+
 
 export default function BadgerBuds() {
 
@@ -18,7 +18,7 @@ export default function BadgerBuds() {
         })
             .then(res => res.json())
             .then(cats => {
-                setBuds(cats)
+                setBuds(cats)    
             })
     }, []);
 
