@@ -23,6 +23,7 @@ export default function BadgerBudsNavbar(props) {
                     <Nav.Link as={Link} to="/">Home</Nav.Link>
                     <Nav.Link as={Link} to="/available-cats">Available Cats</Nav.Link>
                     <Nav.Link as={Link} to="/basket">My Basket</Nav.Link>
+                    <Nav.Link as={Link} to="/myAdoption">My Adoption</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Container>

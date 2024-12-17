@@ -20,15 +20,16 @@ export default function BadgerBudsAdoptable(props) {
     
     return <div>
         <h1>Available Badger Buds</h1>
-        <Container fluid>
-            <Row>
-                {adoptableBuds.map(bud => (
-                    <Col sm={12} md={6} lg={4} xl={3} xxl={4} key={bud.id} >
-                            <BadgerBudSummary {...bud} setAdoptableBuds={setAdoptableBuds}/>
-                    </Col>
-                ))}
-            </Row>
-        </Container>
-        
+        {adoptableBuds.length !== 0 ?
+            <Container fluid>
+                <Row>
+                    {adoptableBuds.map(bud => (
+                        <Col sm={12} md={6} lg={4} xl={3} xxl={4} key={bud.id} >
+                                <BadgerBudSummary {...bud} setAdoptableBuds={setAdoptableBuds}/>
+                        </Col>
+                    ))}
+                </Row>
+            </Container> : "No buds are available for adoption!"
+        }     
     </div>
 }

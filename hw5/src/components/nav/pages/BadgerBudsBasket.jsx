@@ -7,14 +7,14 @@ import BasketItem from "./BasketItem";
 // eslint-disable-next-line no-unused-vars
 export default function BadgerBudsBasket(props) {
     const buds = useContext(BadgerBudsDataContext);
-    console.log(buds);
     const [savedCatIds, setSavedCatIds] = useState([]);
-    console.log(savedCatIds);
     
     useEffect(() =>{
         const localSavedIds = JSON.parse(sessionStorage.getItem("savedCatIds"));
         if(localSavedIds && localSavedIds.length !== 0){
             setSavedCatIds(localSavedIds);
+            console.log(localSavedIds);
+            
         }else{
             sessionStorage.setItem("adoptableBuds", JSON.stringify([]));
         }
@@ -27,17 +27,18 @@ export default function BadgerBudsBasket(props) {
     return <div>
         <h1>Badger Buds Basket</h1>
         <p>These cute cats could be all yours!</p>
-        <Container>
-            <Row>
-            {savedCatIds.map(id => {
-                console.log(id);
-                const bud = buds.filter(bud => bud.id === id)[0];
-                console.log(bud);
-                return <Col key={id} sm={12} md={6} lg={4} xl={3}>
-                    <BasketItem {...bud} setSavedCatIds={setSavedCatIds} buds={buds}/>
-                </Col>
-        })}
-            </Row>
-        </Container>
+        { savedCatIds.length !== 0 ? 
+            <Container>
+                <Row>
+                {savedCatIds.map(id => {
+                    const bud = buds.filter(bud => bud.id === id)[0];
+                    return <Col key={id} sm={12} md={6} lg={4} xl={3}>
+                        <BasketItem {...bud} setSavedCatIds={setSavedCatIds} buds={buds}/>
+                    </Col>})}
+                </Row>
+            </Container> : "You have no buds in your basket!"
+    
+    }
+        
     </div>
 }

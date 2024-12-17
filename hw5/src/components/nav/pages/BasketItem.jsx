@@ -15,6 +15,23 @@ export default function BasketItem(props) {
         sessionStorage.setItem("adoptableBuds", JSON.stringify(updatedAdoptableBuds));
     }
 
+    const handleAdopt =(id) => {
+        const myCatsIds = JSON.parse(sessionStorage.getItem("myCatsIds")) || []
+        if(!myCatsIds.includes(id)){
+            const catObj = props.buds.filter(bud => bud.id === id)[0];
+            const updatedMyCats = [...myCatsIds, catObj];
+            sessionStorage.setItem("myCatsIds", JSON.stringify(updatedMyCats));
+            console.log(JSON.parse(sessionStorage.getItem("myCatsIds")));
+            alert(`${props.name} has been adopted!`)
+        }
+        
+
+        const localSavedIds = JSON.parse(sessionStorage.getItem("savedCatIds"));
+        const updatedCatIds = localSavedIds.filter(i => i !== id);
+        sessionStorage.setItem("savedCatIds", JSON.stringify(updatedCatIds));
+        props.setSavedCatIds(updatedCatIds);
+    }
+
     return <Card className="d-flex flex-column">
     <img 
         src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${props.imgIds[0]}`} 
@@ -28,8 +45,9 @@ export default function BasketItem(props) {
     <h2  style={{padding: "15px"}}>{props.name}</h2>
     <div style={{display: "flex",padding:"15px", width:" 100%", gap: "10px", backgroundColor: "#f5f5f5"}}>
         <Button variant="secondary" onClick={() => handleUnselect(props.id) }>unselect</Button>
-        <Button variant="success"> ❤️ adopt</Button>
+        <Button variant="success" onClick={() => handleAdopt(props.id) }> ❤️ adopt</Button>
     </div>
+    {}
 
 </Card>
 }
