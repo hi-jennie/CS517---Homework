@@ -38,6 +38,7 @@ export default function BadgerBudSummary(props) {
                                 height: "300px", // 图片高度占满容器
                                 objectFit: "cover", // 保持图片比例填充
                               }}
+                            alt={`A picture of ${props.name}`}
                             />
                     </Carousel.Item>
                 })}

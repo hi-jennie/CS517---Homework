@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import {useState} from 'react'
 import {Container, Col, Row} from "react-bootstrap"
+// eslint-disable-next-line no-unused-vars
 export default function MyAdoption(props) {
     const [myCats, setMyCats] = useState([]);
 
