@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {Button, Card} from "react-bootstrap"
+import {Button, Card, Carousel} from "react-bootstrap"
 import {useState} from "react"
 export default function BadgerBudSummary(props) {
     const [showMore, setShowMore] = useState(false);
@@ -27,7 +27,22 @@ export default function BadgerBudSummary(props) {
         
     }
     return <Card className="d-flex flex-column">
-        <img 
+        { showMore ? 
+            <Carousel>
+                {props.imgIds.map(id => {
+                    return <Carousel.Item key={id}>
+                        <img
+                            src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${id}`} 
+                            style={{
+                                width: "100%", // 图片宽度占满容器
+                                height: "300px", // 图片高度占满容器
+                                objectFit: "cover", // 保持图片比例填充
+                              }}
+                            />
+                    </Carousel.Item>
+                })}
+            </Carousel> : 
+            <img 
             src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${props.imgIds[0]}`} 
             style={{
                 width: "100%", // 图片宽度占满容器
@@ -35,7 +50,9 @@ export default function BadgerBudSummary(props) {
                 objectFit: "cover", // 保持图片比例填充
               }}
             alt={`A picture of ${props.name}`}
-        />
+            />
+        }
+        
 
         <h2 style={{padding:"15px"}}>{props.name}</h2>
         { showMore ? <div style={{padding:"15px", color: "#495057"}}>

@@ -17,7 +17,7 @@ export default function MyAdoption(props) {
         <Container>
             <Row>
                 {myCats.map((cat) => {
-                    return <Col key={cat.id}>
+                    return <Col key={cat.id} sm={12} md={6} lg={4} xl={3}>
                         <img 
                             src={`https://raw.githubusercontent.com/CS571-F24/hw5-api-static-content/main/cats/${cat.imgIds[0]}`} 
                             style={{
