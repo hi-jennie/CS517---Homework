@@ -20,6 +20,7 @@ export default function CommentBoard(props) {
         .then(res => res.json())
         .then(comms => {
             setComments(comms)
+            console.log(comments);
         })
     }
 
