@@ -12,7 +12,7 @@ function BadgerLayout(props) {
   // be your initial loginStatus state.
   const [loginStatus, setLoginStatus] = useState(undefined);
 
-  const [chatRooms, setChatRooms] = useState([]);
+  const [roomItems, setRoomItems] = useState([]);
 
   const getChatRooms = () => {
     fetch("https://cs571.org/rest/f24/hw6/chatrooms", {
@@ -28,7 +28,7 @@ function BadgerLayout(props) {
       })
       .then((data) => {
         console.log(data);
-        setChatRooms(data);
+        setRoomItems(data);
       });
   };
 
@@ -61,8 +61,8 @@ function BadgerLayout(props) {
               Register
             </Nav.Link>
             <NavDropdown title="Chatrooms">
-              {chatRooms.map((room) => {
-                return <NavDropdown.Item key={room}>{room}</NavDropdown.Item>;
+              {roomItems.map((room) => {
+                return <NavDropdown.Item as={Link} to={`chatrooms/${room}`} key={room}>{room}</NavDropdown.Item>;
               })}
             </NavDropdown>
           </Nav>
