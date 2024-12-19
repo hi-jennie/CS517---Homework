@@ -49,10 +49,10 @@ export default function BadgerRegister() {
             <Form.Control ref={usernameRef}/><br/>
 
             <Form.Label >Pin</Form.Label>
-            <Form.Control ref={pinRef}/><br/>
+            <Form.Control type="password" ref={pinRef}/><br/>
 
             <Form.Label >Confirmation Pin</Form.Label>
-            <Form.Control ref={confirRef}/><br/>
+            <Form.Control type="password" ref={confirRef}/><br/>
             <Button onClick={handleRegister}>Register</Button>
         </Form>
     </>
