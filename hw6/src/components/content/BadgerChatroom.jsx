@@ -17,10 +17,12 @@ export default function BadgerChatroom(props) {
             console.log(json.messages);
         })
     };
+    const currPageMes = messages.length > 4 ? messages.slice((page-1) * 4, page * 4): messages;
+    
+    const pageNum =messages.length >= 4 && ((messages.length % 4) === 0)  ? 
+                    messages.length / 4 : Math.ceil(messages.length / 4);
 
-    const pageNum =(messages.length / 4) === 0 ? messages.length / 4 : Math.ceil(messages.length / 4);
-
-    const currPageMes = messages.slice((page-1) * 4, page * 4);
+    
     const pagItems = (() => {
         const pagItemsList = [];
         for(let i = 1; i <= pageNum; i++){
@@ -39,6 +41,7 @@ export default function BadgerChatroom(props) {
     // chatrooms, only its props change! Try it yourself.
     useEffect(loadMessages, [props]);
 
+    console.log(currPageMes);
     return <>
         <h1>{props.name} Chatroom</h1>
         {
