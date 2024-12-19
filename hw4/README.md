@@ -26,7 +26,7 @@ Finally, clicking on an interest to search for it is *not* a requirement of this
 
 ### 1. Fetch Student Data
 
-In `Classroom.jsx`, create a React state variable that will hold the array of student data. Then, fetch the student data from `https://cs571api.cs.wisc.edu/rest/f24/hw4/students` *on page load* and save it to this React state variable. Note three things...
+In `Classroom.jsx`, create a React state variable that will hold the array of student data. Then, fetch the student data from `https://cs571.org/rest/f24/hw4/students` *on page load* and save it to this React state variable. Note three things...
  1. You'll likely need to use the React hooks `useEffect` and `useState`.
  2. This is the same data from the HW2 API *except* an additional unique "id" has been added to each student.
  3. This request requires a `X-CS571-ID` header specifying your unique Badger ID.

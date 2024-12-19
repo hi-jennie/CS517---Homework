@@ -12,7 +12,7 @@ const TicketBoard = (props) => {
     })
 
     useEffect(() => {
-        fetch('https://cs571api.cs.wisc.edu/rest/f24/ice/tickets', {
+        fetch('https://cs571.org/rest/f24/ice/tickets', {
             headers: {
                 "X-CS571-ID": CS571.getBadgerId()
             }

@@ -12,7 +12,7 @@ export default function AllRecipes(props) {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        fetch("https://cs571api.cs.wisc.edu/rest/f24/ice/all-recipes", {
+        fetch("https://cs571.org/rest/f24/ice/all-recipes", {
             headers: {
                 "X-CS571-ID": CS571.getBadgerId()
             }

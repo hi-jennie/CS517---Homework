@@ -17,7 +17,7 @@ The two components you will be working with, `BadgerMart.jsx` and `FeaturedItem.
 
 ## Debugging
 
-This assignment has you fetching data from `https://cs571api.cs.wisc.edu/rest/f24/hw3/featured-item`, which changes on a daily basis. To see how your code reacts to any given day's feature, you can specify an optional query parameter of 'day', e.g. `https://cs571api.cs.wisc.edu/rest/f24/hw3/featured-item?day=Friday`. This is simply for your testing purposes.
+This assignment has you fetching data from `https://cs571.org/rest/f24/hw3/featured-item`, which changes on a daily basis. To see how your code reacts to any given day's feature, you can specify an optional query parameter of 'day', e.g. `https://cs571.org/rest/f24/hw3/featured-item?day=Friday`. This is simply for your testing purposes.
 
 For other debugging tips, please refer to the lecture slides.
 
@@ -25,7 +25,7 @@ For other debugging tips, please refer to the lecture slides.
 
 ### 1. Fetch Featured Item
 
-In `BadgerMart.jsx`, fetch today's featured item from `https://cs571api.cs.wisc.edu/rest/f24/hw3/featured-item` and save it to the `feature` state variable via its mutator function. **As a part of your fetch, `console.log` the response body data that you receive.**
+In `BadgerMart.jsx`, fetch today's featured item from `https://cs571.org/rest/f24/hw3/featured-item` and save it to the `feature` state variable via its mutator function. **As a part of your fetch, `console.log` the response body data that you receive.**
 
 ![](_figures/step1.png)
 

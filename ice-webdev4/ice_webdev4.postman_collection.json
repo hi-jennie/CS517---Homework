@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/ice/login",
+					"raw": "https://cs571.org/rest/f24/ice/login",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -57,7 +57,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/ice/logout",
+					"raw": "https://cs571.org/rest/f24/ice/logout",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -99,7 +99,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/ice/comments",
+					"raw": "https://cs571.org/rest/f24/ice/comments",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -129,7 +129,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/ice/comments",
+					"raw": "https://cs571.org/rest/f24/ice/comments",
 					"protocol": "https",
 					"host": [
 						"cs571api",
