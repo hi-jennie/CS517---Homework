@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
 import BadgerMessage from "./BadgerMessage"
-import {Container, Col, Row} from "react-bootstrap"
+import {Container, Col, Row, Pagination} from "react-bootstrap"
 
 export default function BadgerChatroom(props) {
 
     const [messages, setMessages] = useState([]);
+    const [page, setPage] = useState(1);
 
     const loadMessages = () => {
         fetch(`https://cs571.org/rest/f24/hw6/messages?chatroom=${props.name}&page=1`, {
@@ -17,6 +18,21 @@ export default function BadgerChatroom(props) {
         })
     };
 
+    const pageNum =(messages.length / 4) === 0 ? messages.length / 4 : Math.ceil(messages.length / 4);
+
+    const currPageMes = messages.slice((page-1) * 4, page * 4);
+    const pagItems = (() => {
+        const pagItemsList = [];
+        for(let i = 1; i <= pageNum; i++){
+            pagItemsList.push(
+                <Pagination.Item 
+                    active={page === i}
+                    onClick={() => setPage(i)}
+                >{i}</Pagination.Item>
+            )
+        }
+        return pagItemsList;
+    })();
 
     // Why can't we just say []?
     // The BadgerChatroom doesn't unload/reload when switching
@@ -34,8 +50,8 @@ export default function BadgerChatroom(props) {
                 <Container>
                     <Row>
                         {
-                            messages.map(mes => {
-                                return <Col key={mes.id} sm={12} md={6} lg={4}>
+                            currPageMes.map(mes => {
+                                return <Col key={mes.id} sm={12} md={6}>
                                     <BadgerMessage  
                                     title={mes.title}
                                     poster={mes.poster}
@@ -46,7 +62,10 @@ export default function BadgerChatroom(props) {
                                 
                             })
                         }
-                    </Row>    
+                    </Row>
+                    <Pagination>
+                        {pagItems}
+                    </Pagination>   
                 </Container>
                 :
                 <>
