@@ -32,10 +32,11 @@ function BadgerLayout(props) {
   };
 
   const savedLoginStatus = () => {
-    const localLoginStatus = JSON.parse(sessionStorage.getItem("loginStatus")) || false;
+    const localLoginStatus =
+      JSON.parse(sessionStorage.getItem("loginStatus")) || false;
     setLoginStatus(localLoginStatus);
     sessionStorage.setItem("loginStatus", JSON.stringify(localLoginStatus));
-  }
+  };
 
   useEffect(() => {
     getChatRooms();
@@ -60,7 +61,11 @@ function BadgerLayout(props) {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            {loginStatus ? <Nav.Link as={Link} to="logout">Logout</Nav.Link> :
+            {loginStatus ? (
+              <Nav.Link as={Link} to="logout">
+                Logout
+              </Nav.Link>
+            ) : (
               <>
                 <Nav.Link as={Link} to="login">
                   Login
@@ -68,12 +73,20 @@ function BadgerLayout(props) {
                 <Nav.Link as={Link} to="register">
                   Register
                 </Nav.Link>
-              </> 
-            }
-            
+              </>
+            )}
+
             <NavDropdown title="Chatrooms">
               {roomItems.map((room) => {
-                return <NavDropdown.Item as={Link} to={`chatrooms/${room}`} key={room}>{room}</NavDropdown.Item>;
+                return (
+                  <NavDropdown.Item
+                    as={Link}
+                    to={`chatrooms/${room}`}
+                    key={room}
+                  >
+                    {room}
+                  </NavDropdown.Item>
+                );
               })}
             </NavDropdown>
           </Nav>
