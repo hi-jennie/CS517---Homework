@@ -1,9 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {Form, Button} from "react-bootstrap"
-
+import { useNavigate } from 'react-router-dom';
+import BadgerLoginStatusContext from "../contexts/BadgerLoginStatusContext";
 export default function BadgerLogin() {
     const usernameRef = useRef();
     const passwordRef = useRef()
+    const navigate = useNavigate();
+    const [loginStatus, setLoginStatus] = useContext(BadgerLoginStatusContext)
     
 
     const handleLogin = () => {
@@ -30,6 +33,9 @@ export default function BadgerLogin() {
                 }
                 if(res.status === 200){
                     alert("Login successfully")
+                    navigate ("/")
+                    setLoginStatus(true);
+                    sessionStorage.setItem("loginStatus", JSON.stringify(true));
                 }
             })
         }
