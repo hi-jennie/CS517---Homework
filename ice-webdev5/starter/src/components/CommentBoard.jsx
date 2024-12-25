@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react"
 import Comment from "./Comment";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-
+import useStorage from "../hook/useStorage";
 export default function CommentBoard(props) {
 
     const [inputUsername, setInputUsername] = useState("");
@@ -10,7 +10,7 @@ export default function CommentBoard(props) {
 
     // Note! You should use this in combination with sessionStorage.
     // Otherwise, when the user refreshes the page, it will go away!
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useStorage("isLoggedIn", false);
 
     const [comments, setComments] = useState([]);
 
