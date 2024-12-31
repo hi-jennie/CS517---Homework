@@ -1,10 +1,11 @@
-import { Text,StyleSheet } from "react-native";
+import { Text,StyleSheet, Animated } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import React, { use, useState,useEffect } from "react";
 import { Image } from "react-native";
 function NewsDetails({ route }) {
     const  { article } = route.params;
     const [details, setDetails] = useState();
+    const [fadeAnim] = useState(new Animated.Value(0));
 
     function fetchFullArticle () {
         fetch(`https://cs571.org/rest/f24/hw8/article?id=${article.fullArticleId}`, {
@@ -21,6 +22,11 @@ function NewsDetails({ route }) {
         })
         .then((data) => {
             setDetails(data);
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true
+            }).start();
         })
     }
 
@@ -34,7 +40,8 @@ function NewsDetails({ route }) {
   return (
     <>
     {
-        details ? <ScrollView contentContainerStyle={styles.container}>
+        details ? <Animated.View style={{ ...styles.container, opacity: fadeAnim }}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Image source = {{uri: `https://raw.githubusercontent.com/CS571-F24/hw8-api-static-content/main/${details.img}`}} style={{width: 390, height: 300, }}/>
             <Text style={styles.header}>{details.title}</Text>
             <Text style={styles.author}>By {details.author} on {details.posted}</Text>
@@ -42,8 +49,9 @@ function NewsDetails({ route }) {
                 return <Text key={index} style={styles.body}>{p}</Text>
             })}
     
-        </ScrollView> : 
-        <Text>Loading...</Text>
+        </ScrollView>
+        </Animated.View> : 
+        <Text style={styles.loading}>The context is loading...</Text>
     }
     </>
   );
@@ -53,30 +61,40 @@ export default NewsDetails;
 
 const styles = StyleSheet.create({ 
     container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'left',
-        justifyContent: 'center',
-        borderRadius: 10
+        flex: 1,
+    },
+
+    scrollContainer: {
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        borderRadius: 10,
     },
 
     header: {
-        fontSize: 20,
+        fontSize: 25,
         textAlign: 'left',
         fontWeight: '700',
-        padding: 5
+        padding: 15
     },
     author : {
-        fontSize: 18,
+        fontSize: 22,
         textAlign: 'left',
-        padding: 5,
+        padding: 15,
         fontWeight: '600'
     },
     body : {
-        fontSize: 18,
+        fontSize: 20,
         textAlign: 'left',
-        padding: 5,
+        padding: 15,
         fontWeight: '500'
 
+    }, 
+
+    loading: {
+        fontSize: 20,
+        textAlign: 'center',
+        padding: 15,
+        fontWeight: '700'
     }
  });
