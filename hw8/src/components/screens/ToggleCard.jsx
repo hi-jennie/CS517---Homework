@@ -6,15 +6,25 @@ import { useContext } from "react";
 function ToggleCard(props) {
     const {prefs, setPrefs} = useContext(PrefContext);
 
+    // const handleToggle = () => {
+    //     const newPrefs = {...prefs};
+    //     newPrefs[props.tag] = !newPrefs[props.tag];
+    //     setPrefs(newPrefs);
+    // }
+
+    // better way to update state
     const handleToggle = () => {
-        const newPrefs = {...prefs};
-        newPrefs[props.tag] = !newPrefs[props.tag];
-        setPrefs(newPrefs);
-    }
+        setPrefs(prev => ({
+            ...prev,
+            [props.tag]: !prev[props.tag],
+        }));
+    };
 
     return (
     <View style={styles.container}>
-        <Text style={styles.text}>Currently showing {props.tag} articles.</Text>
+        { prefs[props.tag] ? <Text style={styles.text}>Currently showing {props.tag} articles.</Text> :
+        <Text style={styles.text}>Currently NOT showing {props.tag} articles.</Text> }
+        
         <Switch
             // 当 valued 为 true 时，滑块处于活动状态， false 时处于非活动状态
             value={prefs[props.tag]}
@@ -39,6 +49,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     text: {
-        fontSize: 20
+        fontSize: 15
     }
 });

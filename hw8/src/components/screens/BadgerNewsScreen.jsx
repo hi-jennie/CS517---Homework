@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ScrollView, Text, View } from "react-native";
 import BadgerCard from "./BadgerCard";
+import PrefContext from "../context/PrefContext";
 
 function BadgerNewsScreen(props) {
 
     const [articles, setArticles] = useState();
+    const {prefs, setPrefs} = useContext(PrefContext);
+
 
     function fetchArticle() {
         fetch("https://cs571.org/rest/f24/hw8/articles", {
@@ -25,6 +28,33 @@ function BadgerNewsScreen(props) {
         })
     }
 
+    function getPrefArticles() {
+        const prefArticles = [];
+        const chosenPrefs = [];
+        for (let pref in prefs) {
+            if (prefs[pref]) {
+                chosenPrefs.push(pref);
+            }
+        }
+        // for(let article of articles){
+        //     for(let tag of article.tags){
+        //         if(chosenPrefs.includes(tag)){
+        //             prefArticles.push(article);
+        //             break;
+        //         }
+        //     }
+
+        // }
+        // think about why this is better
+        for (let article of articles) {
+            if (article.tags.some(tag => chosenPrefs.includes(tag))) {
+                prefArticles.push(article);
+            }
+        }
+
+        return prefArticles;
+    }
+
     useEffect(() => {
         fetchArticle();
     },[]);
@@ -33,7 +63,7 @@ function BadgerNewsScreen(props) {
     
 
     return <ScrollView>
-        { articles ? articles.map((article) => {
+        { articles ? getPrefArticles().map((article) => {
             return <BadgerCard key={article.id} article={article} />
         }): <Text>Loading...</Text>} 
         <Text>End of Articles</Text>
