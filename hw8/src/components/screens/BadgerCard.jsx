@@ -14,7 +14,7 @@ function BadgerCard(props) {
 
     return <Pressable style={styles.cardContainer}  onPress={handlePress}>
         <Text style={styles.cardText}>{props.article.title}</Text>
-        <Image source={{uri: `https://raw.githubusercontent.com/CS571-F24/hw8-api-static-content/main/${props.article.img}`}} style={{width: 350, height: 300, }} />
+        <Image source={{uri: `https://raw.githubusercontent.com/CS571-F24/hw8-api-static-content/main/${props.article.img}`}} style={{width: 350, height: 300}} />
     </Pressable>
 }
 
