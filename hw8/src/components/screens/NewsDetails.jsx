@@ -1,5 +1,5 @@
 import { Text,StyleSheet, Animated, Linking } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Pressable, ScrollView } from "react-native-gesture-handler";
 import React, { use, useState,useEffect } from "react";
 import { Image } from "react-native";
 function NewsDetails({ route }) {
@@ -21,6 +21,7 @@ function NewsDetails({ route }) {
             return response.json(); 
         })
         .then((data) => {
+            console.log("details:", data);
             setDetails(data);
             Animated.timing(fadeAnim, {
                 toValue: 1,
@@ -45,7 +46,11 @@ function NewsDetails({ route }) {
             <Image source = {{uri: `https://raw.githubusercontent.com/CS571-F24/hw8-api-static-content/main/${details.img}`}} style={{width: 390, height: 300, }}/>
             <Text style={styles.header}>{details.title}</Text>
             <Text style={styles.author}>By {details.author} on {details.posted}</Text>
-            <Text style={{...styles.author, color: "blue"}} onPress={() => Linking.openURL(`${styles.url}`)}>Read full article here</Text>
+            {/* 超链接 */}
+            <Pressable onPress={() => Linking.openURL(`${details.url}`)}>
+                <Text style={{...styles.author, color: "blue"}} >Read full article here</Text>
+            </Pressable>
+           
             { details.body.map((p, index) => {
                 return <Text key={index} style={styles.body}>{p}</Text>
             })}
