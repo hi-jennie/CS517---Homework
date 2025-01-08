@@ -19,8 +19,19 @@ export default function App() {
   const [chatrooms, setChatrooms] = useState([]);
 
   useEffect(() => {
-    // hmm... maybe I should load the chatroom names here
-    setChatrooms(["Hello", "World"]) // for example purposes only!
+    fetch("https://cs571.org/rest/f24/hw6/chatrooms",{
+      method: "GET",
+      headers: {
+        "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
+      }
+    }).then(response => {
+      if(response.ok){
+        return response.json();
+      }
+    }).then(data => {
+      console.log("chatrooms "+data);
+      setChatrooms(data);
+    })
   }, []);
 
   function handleLogin(username, pin) {
@@ -57,8 +68,10 @@ export default function App() {
     return (
       <NavigationContainer>
         <ChatDrawer.Navigator>
+          {/* // this is a static way to create the landing screen */}
           <ChatDrawer.Screen name="Landing" component={BadgerLandingScreen} />
           {
+            // this is a dynamic way to create the chatroom screens
             chatrooms.map(chatroom => {
               return <ChatDrawer.Screen key={chatroom} name={chatroom}>
                 {(props) => <BadgerChatroomScreen name={chatroom} />}
