@@ -5,10 +5,6 @@ function BadgerLoginScreen(props) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        console.log(userName, password);
-    }
-
     return <View style={styles.container}>
         <Text style={{ fontSize: 36 }}>BadgerChat Login</Text>
         <View style={styles.inputForm}>
@@ -19,7 +15,7 @@ function BadgerLoginScreen(props) {
             <Text style={styles.label}>Password</Text>
             <TextInput style={styles.input} secureTextEntry={true} value={password} onChangeText={(text) => setPassword(text)}></TextInput>
         </View>
-        <Pressable style={styles.button} onPress={handleLogin}>
+        <Pressable style={styles.button} onPress={() => props.handleLogin(userName, password)}>
             <Text style={{color: "white", fontSize:20, fontWeight: '500'}}>LOGIN</Text>
         </Pressable>
         {/* <Button color="grey" title="Signup" onPress={() => props.setIsRegistering(true)} /> */}
@@ -28,7 +24,7 @@ function BadgerLoginScreen(props) {
             <Pressable style={{...styles.button, backgroundColor: 'grey'}} onPress={() => props.setIsRegistering(true)}>
                 <Text style={{color: "white", fontSize:15, fontWeight: '500'}}>SIGNUP</Text>
             </Pressable>
-            <Pressable style={{...styles.button, width:200, backgroundColor: 'grey'}} onPress={handleLogin}>
+            <Pressable style={{...styles.button, width:200, backgroundColor: 'grey'}}>
             <Text style={{color: "white", fontSize:15, fontWeight: '500'}}>CONTINUE AS GUEST</Text>
             </Pressable>
         </View>

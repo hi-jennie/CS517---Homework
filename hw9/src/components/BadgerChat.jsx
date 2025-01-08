@@ -24,8 +24,28 @@ export default function App() {
   }, []);
 
   function handleLogin(username, pin) {
-    // hmm... maybe this is helpful!
-    setIsLoggedIn(true); // I should really do a fetch to login first!
+    console.log(username, pin);
+        fetch("https://cs571.org/rest/f24/hw6/login", {
+            method: "POST",
+            headers: {
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "username": username,
+                 "pin": pin
+            })
+        }).then(response => {
+            if(response.ok){
+                return response.json();
+            }
+            if(response.status === 401){
+                Alert.alert("That username or pin is incorrect!");
+            }
+        }).then(data => {
+          console.log('login '+data);
+          setIsLoggedIn(true);
+        })
   }
 
   function handleSignup(username, pin) {

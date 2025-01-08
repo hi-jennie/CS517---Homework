@@ -50,8 +50,7 @@ function BadgerRegisterScreen(props) {
                     Alert.alert("username is already taken");
                 }
             }).then(data => {
-                console.log(1);
-                console.log(data);
+                console.log('register '+data);
                 props.setIsRegistering(false);
             })
         }
