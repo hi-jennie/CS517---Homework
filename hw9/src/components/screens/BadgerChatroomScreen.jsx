@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , ScrollView,FlatList, Pressable, Modal, TextInput} from "react-native";
+import { StyleSheet, Text, View , ScrollView,FlatList, Pressable, Modal, TextInput, Alert} from "react-native";
 import { useEffect, useState } from 'react';
 import BadgerChatMessage from '../helper/BadgerChatMessage';
 
@@ -24,6 +24,35 @@ function BadgerChatroomScreen(props) {
             setMessages(data.messages);
         })
 
+    }
+
+    const handleCreatePost = () => {
+        fetch(`https://cs571.org/rest/f24/hw6/messages?chatroom=${props.name}`, {
+            method: "POST",
+            headers: {
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "title": title,
+                "content": body
+            })
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(data => {
+            console.log("updateMessage "+data);
+            setIsModalVisible(false);
+
+            Alert.alert("Successfully Posted",
+                "Successfully Posted",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+            );
+            getAllMessages();
+        })
     }
 
     const handleRefresh = () => {
@@ -81,7 +110,7 @@ function BadgerChatroomScreen(props) {
 
                     <View style={styles.buttonsContainer}>
 
-                        <Pressable style={isDisabled ? {...styles.button, backgroundColor: '#D3D3D3', width:170}: {...styles.button, backgroundColor: '#B10F33', width:170}} disabled={isDisabled}>
+                        <Pressable style={isDisabled ? {...styles.button, backgroundColor: '#D3D3D3', width:170}: {...styles.button, backgroundColor: '#B10F33', width:170}} disabled={isDisabled} onPress={handleCreatePost}>
                             <Text style={isDisabled ?{...styles.modalText, color: 'grey', fontSize: 22}:{...styles.modalText, color: 'white', fontSize: 22}}>CREATE POST</Text>
                         </Pressable>
 
