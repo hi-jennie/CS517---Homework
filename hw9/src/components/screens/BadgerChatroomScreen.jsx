@@ -1,10 +1,15 @@
-import { StyleSheet, Text, View , ScrollView,FlatList} from "react-native";
+import { StyleSheet, Text, View , ScrollView,FlatList, Pressable, Modal, TextInput} from "react-native";
 import { useEffect, useState } from 'react';
 import BadgerChatMessage from '../helper/BadgerChatMessage';
 
 function BadgerChatroomScreen(props) {
     const [messages, setMessages] = useState([]);
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+
     const getAllMessages = () => {
         fetch(`https://cs571.org/rest/f24/hw6/messages?chatroom=${props.name}`, {
             method: "GET",
@@ -31,29 +36,125 @@ function BadgerChatroomScreen(props) {
         getAllMessages();
     },[]);
 
+    useEffect(() => {
+        if (title.length > 0 && body.length > 0) {
+            setIsDisabled(false);
+        } else {
+            setIsDisabled(true);
+        }
+    },[title, body]);
+
     console.log(messages);
 
     return (
-    <FlatList
-      data={messages} // data source
-      // item is each element in the data source
-      renderItem={({ item }) => (
-        <BadgerChatMessage message={item} />
-      )} // 渲染每一条消息
-      keyExtractor={(item) => item.id.toString()} // 提供唯一的 key
-      refreshing={isRefreshing} // 控制刷新状态的布尔值(是否在刷新)
-      onRefresh={handleRefresh} // 下拉触发的函数
-    />
+        <View style={styles.container}>
+            <FlatList
+                data={messages} // data source
+                // item is each element in the data source
+                renderItem={({ item }) => (
+                    <BadgerChatMessage message={item} />
+                )}
+                keyExtractor={(item) => item.id.toString()} // 提供唯一的 key
+                refreshing={isRefreshing} // showing the refresh sign 
+                onRefresh={handleRefresh} // the function that will be called when pull down 
+            />
+            <Pressable style={styles.postButton} onPress={() => setIsModalVisible(true)}>
+                <Text style={styles.postButtonText}>ADD POST</Text>
+            </Pressable>
+
+            {/* create a Modal to post a message： onRequestClose={() => setIsModalVisible(false)}是返回键的时候推出Modal*/}
+            <Modal animationType='slide' transparent={true} visible={isModalVisible} onRequestClose={() => setIsModalVisible(false)}>
+                <View style={styles.modalContainer}>
+                    <Text style={styles.modalText}>Create a Post</Text>
+
+                    <View>
+                        <Text style={styles.modalText}>Title</Text>
+                        <TextInput style={styles.input} value={title} onChangeText={(text) => setTitle(text)}></TextInput>
+                    </View>
+
+                    <View>
+                        <Text style={styles.modalText}>Body</Text>
+                        <TextInput style={{...styles.input, height: 100}} multiline={true} numberOfLines={4}
+                            value={body} onChangeText={(text) => setBody(text)}
+                        ></TextInput>
+                    </View>
+
+                    <View style={styles.buttonsContainer}>
+
+                        <Pressable style={isDisabled ? {...styles.button, backgroundColor: '#D3D3D3', width:170}: {...styles.button, backgroundColor: '#B10F33', width:170}} disabled={isDisabled}>
+                            <Text style={isDisabled ?{...styles.modalText, color: 'grey', fontSize: 22}:{...styles.modalText, color: 'white', fontSize: 22}}>CREATE POST</Text>
+                        </Pressable>
+
+                        <Pressable  onPress={() => setIsModalVisible(false)} style={{...styles.button}}>
+                            <Text style={{...styles.modalText, color: 'white', fontSize: 22}}>CANCEL</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
+        </View>
+    
   );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#F5F5F5',
+        gap:10
+    },
+    postButton: {
+        display: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        alignItems: 'center',
+        paddingTop: 20,
+        backgroundColor: '#B10F33',
+        height: 80,
+    },
+    postButtonText: {
+        color: 'white',
+        fontSize: 30,
+        fontWeight: '600'
+    },
+    modalContainer: {
+        display: 1,
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 400,
+        width: 350,
+        borderRadius: 15,
+        marginLeft: 20,
+        marginTop: 180,
+        gap:15,
+        borderWidth: 1.5,
+    },
+    modalText: {
+        fontSize: 30,
+        fontWeight: '600'
+    },
+    input:{
+        width: 280,
+        height: 45,
+        padding: 5,
+        borderWidth: 1.5,
+        borderColor: 'black'
+    },
+
+    buttonsContainer: {
+        flexDirection: 'row',
+        gap:10
+    },
+    button: {
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+        width: 100,
+        height: 50,
+        backgroundColor:"#9E9E9E",
+        borderRadius: 8,
+    },
 });
 
 export default BadgerChatroomScreen;
