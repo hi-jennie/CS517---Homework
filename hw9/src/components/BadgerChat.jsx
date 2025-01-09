@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
+
 import CS571 from '@cs571/mobile-client'
 import * as SecureStore from 'expo-secure-store';
 import BadgerChatroomScreen from './screens/BadgerChatroomScreen';
@@ -52,12 +53,22 @@ export default function App() {
             }
             if(response.status === 401){
                 Alert.alert("That username or pin is incorrect!");
+                return; // 防止后续代码继续执行
             }
+            throw new Error(`Unexpected response status: ${response.status}`); // 处理其他错误
         }).then(data => {
-          console.log('login '+data);
-          setIsLoggedIn(true);
-        })
+          if (data) {
+            console.log("login", data);
+            setIsLoggedIn(true);
+            
+          }
+        }).catch(err => {
+          console.error("Error during login:", err);
+          Alert.alert("Login failed. Please try again later.");
+        });
   }
+
+  
 
   function handleSignup(username, pin) {
     // hmm... maybe this is helpful!

@@ -64,6 +64,8 @@ function BadgerChatroomScreen(props) {
           { text: "OK", onPress: () => console.log("OK Pressed") },
         ]);
         getAllMessages();
+        setTitle("");
+        setBody("");
       });
   };
 

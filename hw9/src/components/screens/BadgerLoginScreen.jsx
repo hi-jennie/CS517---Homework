@@ -4,6 +4,7 @@ import { Alert, Button, Pressable, StyleSheet, Text, TextInput, View } from "rea
 function BadgerLoginScreen(props) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    
 
     return <View style={styles.container}>
         <Text style={{ fontSize: 36 }}>BadgerChat Login</Text>
