@@ -87,8 +87,6 @@ function BadgerChatroomScreen(props) {
     }
   }, [title, body]);
 
-  console.log(messages);
-
   return (
     <View style={styles.container}>
       <FlatList

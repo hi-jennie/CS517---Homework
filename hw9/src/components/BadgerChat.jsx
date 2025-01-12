@@ -9,6 +9,7 @@ import BadgerChatroomScreen from './screens/BadgerChatroomScreen';
 import BadgerRegisterScreen from './screens/BadgerRegisterScreen';
 import BadgerLoginScreen from './screens/BadgerLoginScreen';
 import BadgerLandingScreen from './screens/BadgerLandingScreen';
+import BadgerLogoutScreen from './screens/BadgerLogoutScreen';
 
 
 const ChatDrawer = createDrawerNavigator();
@@ -30,7 +31,6 @@ export default function App() {
         return response.json();
       }
     }).then(data => {
-      console.log("chatrooms "+data);
       setChatrooms(data);
     })
   }, []);
@@ -47,9 +47,24 @@ export default function App() {
                 "username": username,
                  "pin": pin
             })
-        }).then(response => {
+        }).then( async (response) => {
             if(response.ok){
-                return response.json();
+                const cookies = response.headers.get('set-cookie');
+                console.log(cookies); // 输出服务器返回的 Cookies
+                if(cookies){
+                  // 从 Cookies 中解析 JWT
+                  const jwt = getCookieValue(cookies, 'badgerchat_auth'); // 假设 JWT 名为 'jwt'
+                  if (jwt) {
+                    // 存储 JWT 到 SecureStore
+                    await SecureStore.setItemAsync('JWT', jwt);
+                    console.log("JWT successfully stored in SecureStore.");
+                    setIsLoggedIn(true); // 更新登录状态
+                    return response.json();
+                  } else {
+                    console.error("JWT not found in Cookies.");
+                    Alert.alert("Login failed. Please try again.");
+                }}
+                
             }
             if(response.status === 401){
                 Alert.alert("That username or pin is incorrect!");
@@ -58,9 +73,7 @@ export default function App() {
             throw new Error(`Unexpected response status: ${response.status}`); // 处理其他错误
         }).then(data => {
           if (data) {
-            console.log("login", data);
-            setIsLoggedIn(true);
-            
+            console.log("login"); 
           }
         }).catch(err => {
           console.error("Error during login:", err);
@@ -74,6 +87,13 @@ export default function App() {
     // hmm... maybe this is helpful!
     setIsLoggedIn(true); // I should really do a fetch to register first!
   }
+
+  function getCookieValue(cookieString, name) {
+    // 使用正则表达式匹配指定的 Cookie 名称及其值
+    const match = cookieString.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+    // 如果匹配成功，返回解码后的值；否则返回 null
+    return match ? decodeURIComponent(match[1]) : null;
+}
 
   if (isLoggedIn) {
     return (
@@ -89,6 +109,9 @@ export default function App() {
               </ChatDrawer.Screen>
             })
           }
+          <ChatDrawer.Screen name="Logout" >
+            {(props) => <BadgerLogoutScreen setIsLoggedIn={setIsLoggedIn}/>}
+          </ChatDrawer.Screen>
         </ChatDrawer.Navigator>
       </NavigationContainer>
     );
