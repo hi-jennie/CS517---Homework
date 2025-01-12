@@ -25,7 +25,7 @@ function BadgerLoginScreen(props) {
             <Pressable style={{...styles.button, backgroundColor: 'grey'}} onPress={() => props.setIsRegistering(true)}>
                 <Text style={{color: "white", fontSize:15, fontWeight: '500'}}>SIGNUP</Text>
             </Pressable>
-            <Pressable style={{...styles.button, width:200, backgroundColor: 'grey'}}>
+            <Pressable style={{...styles.button, width:200, backgroundColor: 'grey'}} onPress={() => props.setIsGuest(true)}>
             <Text style={{color: "white", fontSize:15, fontWeight: '500'}}>CONTINUE AS GUEST</Text>
             </Pressable>
         </View>

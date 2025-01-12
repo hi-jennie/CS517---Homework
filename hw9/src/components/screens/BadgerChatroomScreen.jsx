@@ -69,6 +69,7 @@ function BadgerChatroomScreen(props) {
       });
   };
 
+
   const handleRefresh = () => {
     setIsRefreshing(true);
     getAllMessages();
@@ -92,17 +93,21 @@ function BadgerChatroomScreen(props) {
       <FlatList
         data={messages} // data source
         // item is each element in the data source
-        renderItem={({ item }) => <BadgerChatMessage message={item} getAllMessages={getAllMessages} />}
+        renderItem={({ item }) => <BadgerChatMessage message={item} getAllMessages={getAllMessages} isGuest={props.isGuest}/>}
         keyExtractor={(item) => item.id.toString()} // 提供唯一的 key
         refreshing={isRefreshing} // showing the refresh sign
         onRefresh={handleRefresh} // the function that will be called when pull down
       />
-      <Pressable
-        style={styles.postButton}
-        onPress={() => setIsModalVisible(true)}
-      >
-        <Text style={styles.postButtonText}>ADD POST</Text>
-      </Pressable>
+      {
+        !props.isGuest &&
+        <Pressable
+            style={styles.postButton}
+            onPress={() => setIsModalVisible(true)}
+            >
+            <Text style={styles.postButtonText}>ADD POST</Text>
+        </Pressable>
+      }
+      
 
       {/* create a Modal to post a message： onRequestClose={() => setIsModalVisible(false)}是返回键的时候推出Modal*/}
       <Modal

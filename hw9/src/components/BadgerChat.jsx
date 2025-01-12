@@ -10,6 +10,7 @@ import BadgerRegisterScreen from './screens/BadgerRegisterScreen';
 import BadgerLoginScreen from './screens/BadgerLoginScreen';
 import BadgerLandingScreen from './screens/BadgerLandingScreen';
 import BadgerLogoutScreen from './screens/BadgerLogoutScreen';
+import BadgerSignupScreen from './screens/BadgerSignupScreen';
 
 
 const ChatDrawer = createDrawerNavigator();
@@ -19,6 +20,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isRegistering, setIsRegistering] = useState(false);
   const [chatrooms, setChatrooms] = useState([]);
+  const [isGuest, setIsGuest] = useState(false);
 
   useEffect(() => {
     fetch("https://cs571.org/rest/f24/hw6/chatrooms",{
@@ -95,7 +97,7 @@ export default function App() {
     return match ? decodeURIComponent(match[1]) : null;
 }
 
-  if (isLoggedIn) {
+  if (isLoggedIn || isGuest) {
     return (
       <NavigationContainer>
         <ChatDrawer.Navigator>
@@ -105,19 +107,27 @@ export default function App() {
             // this is a dynamic way to create the chatroom screens
             chatrooms.map(chatroom => {
               return <ChatDrawer.Screen key={chatroom} name={chatroom}>
-                {(props) => <BadgerChatroomScreen name={chatroom} />}
+                {(props) => <BadgerChatroomScreen name={chatroom} isGuest={isGuest}/>}
               </ChatDrawer.Screen>
             })
           }
-          <ChatDrawer.Screen name="Logout" >
-            {(props) => <BadgerLogoutScreen setIsLoggedIn={setIsLoggedIn}/>}
-          </ChatDrawer.Screen>
+          {isLoggedIn && 
+            <ChatDrawer.Screen name="Logout" >
+              {(props) => <BadgerLogoutScreen setIsLoggedIn={setIsLoggedIn}/>}
+            </ChatDrawer.Screen>
+          }
+          {isGuest && 
+            <ChatDrawer.Screen name="Signup" >
+            {(props) => <BadgerSignupScreen setIsGuest={setIsGuest}/>}
+            </ChatDrawer.Screen>
+          }
+          
         </ChatDrawer.Navigator>
       </NavigationContainer>
     );
   } else if (isRegistering) {
     return <BadgerRegisterScreen handleSignup={handleSignup} setIsRegistering={setIsRegistering} />
   } else {
-    return <BadgerLoginScreen handleLogin={handleLogin} setIsRegistering={setIsRegistering} />
+    return <BadgerLoginScreen handleLogin={handleLogin} setIsRegistering={setIsRegistering} setIsGuest={setIsGuest} />
   }
 }
