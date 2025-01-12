@@ -94,7 +94,7 @@ function BadgerChatroomScreen(props) {
       <FlatList
         data={messages} // data source
         // item is each element in the data source
-        renderItem={({ item }) => <BadgerChatMessage message={item} />}
+        renderItem={({ item }) => <BadgerChatMessage message={item} getAllMessages={getAllMessages} />}
         keyExtractor={(item) => item.id.toString()} // 提供唯一的 key
         refreshing={isRefreshing} // showing the refresh sign
         onRefresh={handleRefresh} // the function that will be called when pull down

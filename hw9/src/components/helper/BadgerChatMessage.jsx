@@ -1,4 +1,4 @@
-import { Text, StyleSheet,Pressable } from "react-native";
+import { Text, StyleSheet,Pressable, Alert } from "react-native";
 import BadgerCard from "./BadgerCard"
 import { useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
@@ -28,6 +28,27 @@ function BadgerChatMessage(props) {
             })
         
     },[])
+
+    function deletePost() {
+        console.log(props.message.id);
+        fetch(`https://cs571.org/rest/f24/hw6/messages?id=${props.message.id}`, {
+            method: "DELETE",
+            headers: {
+                "X-CS571-ID":"bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
+            }
+        }).then((res) => {
+            if(res.ok) {
+                return res.json();
+            }else(
+                console.log(res.status)
+            )
+        }).then((data) => {
+            console.log(data);
+            Alert.alert("Delete successfully!");
+            props.getAllMessages();
+        })
+    }
+
     return <BadgerCard style={{ marginTop: 16, padding: 8, marginLeft: 8, marginRight: 8 }}>
         <Text style={{fontSize: 28, fontWeight: 600}}>{props.message.title}</Text>
         <Text style={{fontSize: 12}}>by {props.message.poster} | Posted on {dt.toLocaleDateString()} at {dt.toLocaleTimeString()}</Text>
@@ -36,6 +57,7 @@ function BadgerChatMessage(props) {
         {isAbleDelete &&
             <Pressable
                 style={styles.button}
+                onPress={deletePost}
                 >
                 <Text
                 style={styles.buttonText} 
