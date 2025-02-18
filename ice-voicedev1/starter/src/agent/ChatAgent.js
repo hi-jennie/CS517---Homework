@@ -46,15 +46,30 @@ const createChatAgent = () => {
         } else {
             const intentName = data.intents[0].name;
             if (intentName === "tell_joke") {
-                return "I should get a joke"
+                return await tellJoke();
             } else if (intentName === "why_chicken") {
-                return "To get to the other side"
+                return await whyChicken();
             } else {
                 return "Will never happen"
             }
         }
         //  return "I should get a joke"; 返回的是一个字符串。
         // 由于这个函数是 async，它会自动将这个字符串包装成一个 Promise，所以当 await 调用这个 async 函数时，你获取到的是一个已解析的 Promise，其中的值就是那个字符串。
+
+    }
+
+    async function whyChicken() {
+        return "To get to the other side"
+    }
+
+    async function tellJoke() {
+        const resp = await fetch("https://v2.jokeapi.dev/joke/any?safe-mode");
+        const data = await resp.json();
+        if (data.setup) {
+            return data.setup + " " + data.delivery
+        } else {
+            return data.joke
+        }
 
     }
 
