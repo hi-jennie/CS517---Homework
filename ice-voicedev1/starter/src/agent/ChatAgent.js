@@ -46,7 +46,7 @@ const createChatAgent = () => {
         } else {
             const intentName = data.intents[0].name;
             if (intentName === "tell_joke") {
-                return await tellJoke();
+                return await tellJoke(data);
             } else if (intentName === "why_chicken") {
                 return await whyChicken();
             } else {
@@ -62,8 +62,12 @@ const createChatAgent = () => {
         return "To get to the other side"
     }
 
-    async function tellJoke() {
-        const resp = await fetch("https://v2.jokeapi.dev/joke/any?safe-mode");
+    async function tellJoke(withData) {
+        let jokeType = "Any";
+        if (withData.entities["joke_type:joke_type"]) {
+            jokeType = withData.entities["joke_type:joke_type"][0].value;
+        }
+        const resp = await fetch(`https://v2.jokeapi.dev/joke/${jokeType}?safe-mode`);
         const data = await resp.json();
         if (data.setup) {
             return data.setup + " " + data.delivery
