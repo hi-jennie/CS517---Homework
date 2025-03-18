@@ -2,7 +2,7 @@
 
 const createChatAgent = () => {
 
-    const CS571_WITAI_ACCESS_TOKEN = ""; // Put your CLIENT access token here.
+    const CS571_WITAI_ACCESS_TOKEN = "TEQXARMCRT2LS3A4WELDNGY2FH35BLP7"; // Put your CLIENT access token here.
 
     let availableItems = [];
 
@@ -21,7 +21,26 @@ const createChatAgent = () => {
 
     const handleReceive = async (prompt) => {
         // TODO: Replace this with your code to handle a user's message!
-        return "Your message has been received. Maybe I should contact Wit.AI to figure out what you intend..."
+        let res = await fetch("https://api.wit.ai/message?q=" + encodeURIComponent(prompt), {
+            headers: {
+                "Authorization": "Bearer " + CS571_WITAI_ACCESS_TOKEN
+            }
+        })
+        let data = await res.json();
+        console.log(data);
+
+        if (data.intents.length === 0) {
+            return "Sorry, I didn't get that. Type 'help to see what you can do";
+        } else {
+            const intentName = data.intents[0].name;
+            if (intentName === "ask_help") {
+                return await askHelp()
+            }
+        }
+    }
+
+    async function askHelp() {
+        return "In BadgerMart Voice, you can get the list of items, the price of an item, add or remove an item from you cart"
     }
 
     return {
