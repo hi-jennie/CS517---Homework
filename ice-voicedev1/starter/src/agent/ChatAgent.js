@@ -5,6 +5,7 @@ const createChatAgent = () => {
     // Put your CLIENT access token here.
     const CS571_WITAI_ACCESS_TOKEN = "N36NP6TQXVL5YEJIEJHPTMRZRJIGNALU";
 
+    // eslint-disable-next-line no-unused-vars
     let jokeNum = 0;
 
     const handleInitialize = async () => {
@@ -16,7 +17,7 @@ const createChatAgent = () => {
         // return fetch("https://api.wit.ai/message?q=" + encodeURIComponent(prompt), {
         //     headers: {
         //         "Authorization": "Bearer " + CS571_WITAI_ACCESS_TOKEN
-        //     }
+        // 
         // })
         //     .then(res => res.json())
         //     .then(data => {
