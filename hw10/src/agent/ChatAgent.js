@@ -5,6 +5,7 @@ const createChatAgent = () => {
     const CS571_WITAI_ACCESS_TOKEN = "TEQXARMCRT2LS3A4WELDNGY2FH35BLP7"; // Put your CLIENT access token here.
 
     let availableItems = [];
+    let cart = {};
 
     const handleInitialize = async () => {
         const response = await fetch("https://cs571.org/rest/f24/hw10/items", {
@@ -15,7 +16,14 @@ const createChatAgent = () => {
         })
         const data = await response.json();
         availableItems = data;
+        data.forEach(element => {
+            cart[element.name] = 0;
+        });
+
         console.log(availableItems);
+        console.log(cart);
+
+
         return "Welcome to BadgerMart Voice! Type your question, or ask for help if you're lost!";
     }
 
@@ -41,6 +49,8 @@ const createChatAgent = () => {
                 // the value of "type:type" is an array, so we use [0] to get the first element
                 // It's kind of confusing !!!
                 return await getItemPrice(data.entities["type:type"][0]["value"])
+            } else if (intentName === "add_item") {
+                return await addItem(data);
             }
         }
     }
@@ -64,6 +74,40 @@ const createChatAgent = () => {
             return `${itemName} cost $${targetItem[0].price} each`;
         }
     }
+
+    async function addItem(data) {
+        const typeEntity = data.entities["type:type"];
+        if (!typeEntity || typeEntity.length === 0) {
+            return "Sorry, this item is not in stock";
+        }
+        const itemName = typeEntity[0]?.value;
+
+        // if(data.entities["type:type"] === undefined){
+        //     return "sorry, this item is not in stock"
+        // } 
+        // const itemName = data.entities["type:type"][0]["value"];
+
+        const itemNumEntity = data.entities["wit$number:number"];
+        const itemNum = itemNumEntity?.[0]?.value ?? 1; // 1 is the default value
+
+        if (itemNum < 1) {
+            return "Sorry, you need to add at least one item";
+        }
+        cart[itemName] += Math.floor(itemNum);
+
+        // let itemNum = data.entities["wit$number:number"]
+        // if(itemNum[0]["value"] < 1){
+        //     return "Sorry, you need to add at least one item"
+        // }
+        // if(itemNum === undefined){
+        //     return await addItem(itemName, 1);
+        // } 
+        console.log(cart);
+        return `Sure, adding ${itemNum} ${itemName}(s) to your cart.`;
+
+    }
+
+
     return {
         handleInitialize,
         handleReceive
