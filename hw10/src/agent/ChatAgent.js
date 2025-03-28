@@ -55,6 +55,8 @@ const createChatAgent = () => {
                 return await removeItem(data);
             } else if (intentName === "view_cart") {
                 return await viewCart();
+            } else if (intentName === "checkout") {
+                return await checkout();
             }
         }
     }
@@ -121,7 +123,7 @@ const createChatAgent = () => {
         const itemNum = itemNumEntity?.[0]?.value ?? 1; // 1 is the default value
 
         if (itemNum < 1) {
-            return "Sorry, you need to add at least one item";
+            return "Sorry, remove at least one item";
         }
         if (cart[itemName] === 0) {
             return "Sorry, you don't have this item in your cart"
@@ -147,19 +149,36 @@ const createChatAgent = () => {
         } else {
             let i = 0;
             console.log(cartItems);
-            while (i < cartItems.length - 1) {
-                totalItems += `${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}、 `;
-                console.log(totalItems);
-                if (i === cartItems.length - 2) {
-                    totalItems += `and ${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}`;
+            while (i < cartItems.length) {
+                if (i < cartItems.length - 2) {
+                    totalItems += `${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}、`;
+                } else if (i === cartItems.length - 2) {
+                    totalItems += `${cartItems[i]['itemNum']} ${cartItems[i]['itemName']} and `;
+                } else {
+                    totalItems += `${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}`;
                 }
                 i++;
-
             }
         }
         return `You have ${totalItems} in your cart, totaling $${totalPrices.toFixed(2)}.`
     }
 
+    async function checkout() {
+        if (Object.keys(cart).every(item => cart[item] === 0)) {
+            return "Your cart is empty. Please add some items first."
+        }
+        const res = await fetch('https://cs571.org/rest/f24/hw10/checkout', {
+            method: "POST",
+            headers: {
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cart)
+        })
+        const data = await res.json();
+        cart = {};
+        return `Success! your confirmation ID number is ${data.confirmationId}.`
+    }
     return {
         handleInitialize,
         handleReceive
