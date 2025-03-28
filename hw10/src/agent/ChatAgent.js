@@ -123,12 +123,42 @@ const createChatAgent = () => {
         if (itemNum < 1) {
             return "Sorry, you need to add at least one item";
         }
+        if (cart[itemName] === 0) {
+            return "Sorry, you don't have this item in your cart"
+        }
         cart[itemName] -= Math.floor(itemNum);
         console.log(cart);
         return `Sure, removing ${itemNum} ${itemName}(s) from your cart.`
     }
 
+    async function viewCart() {
+        let totalPrices = 0;
+        let totalItems = '';
+        let cartItems = [];
+        for (let item in cart) {
+            if (cart[item] > 0) {
+                cartItems.push({ itemName: item, itemNum: cart[item] });
+                totalPrices += cart[item] * availableItems.filter(i => i.name === item)[0].price;
+            }
+        }
 
+        if (cartItems.length === 0) {
+            return "Your cart is empty"
+        } else {
+            let i = 0;
+            console.log(cartItems);
+            while (i < cartItems.length - 1) {
+                totalItems += `${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}、 `;
+                console.log(totalItems);
+                if (i === cartItems.length - 2) {
+                    totalItems += `and ${cartItems[i]['itemNum']} ${cartItems[i]['itemName']}`;
+                }
+                i++;
+
+            }
+        }
+        return `You have ${totalItems} in your cart, totaling $${totalPrices.toFixed(2)}.`
+    }
 
     return {
         handleInitialize,
