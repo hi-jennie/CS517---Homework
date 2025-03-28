@@ -51,6 +51,10 @@ const createChatAgent = () => {
                 return await getItemPrice(data.entities["type:type"][0]["value"])
             } else if (intentName === "add_item") {
                 return await addItem(data);
+            } else if (intentName === "remove_item") {
+                return await removeItem(data);
+            } else if (intentName === "view_cart") {
+                return await viewCart();
             }
         }
     }
@@ -106,6 +110,24 @@ const createChatAgent = () => {
         return `Sure, adding ${itemNum} ${itemName}(s) to your cart.`;
 
     }
+
+    async function removeItem(data) {
+        const typeEntity = data.entities["type:type"];
+        if (!typeEntity || typeEntity.length === 0) {
+            return "Sorry, this item is not in stock";
+        }
+        const itemName = typeEntity[0]?.value;
+        const itemNumEntity = data.entities["wit$number:number"];
+        const itemNum = itemNumEntity?.[0]?.value ?? 1; // 1 is the default value
+
+        if (itemNum < 1) {
+            return "Sorry, you need to add at least one item";
+        }
+        cart[itemName] -= Math.floor(itemNum);
+        console.log(cart);
+        return `Sure, removing ${itemNum} ${itemName}(s) from your cart.`
+    }
+
 
 
     return {
