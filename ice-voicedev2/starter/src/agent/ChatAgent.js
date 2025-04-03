@@ -48,7 +48,7 @@ const createChatAgent = () => {
         const data = await resp.json();
         if (data.intents.length > 0) {
             switch (data.intents[0].name) {
-                case "create_comment": return handleCreateComment(data);
+                case "create_comments": return handleCreateComment(data);
                 case "get_comments": return handleGetComments(data);
                 case "login": return handleLogin(data);
                 case "logout": return handleLogout(data);
