@@ -7,7 +7,7 @@ const createLoginSubAgent = (end) => {
 
     const handleInitialize = async (promptData) => {
         // 在if (isLogin) 不能直接使用isLoggedIn() 应为他是一个promise
-        // It seems that after register, it will login automatically
+        // after register, it will login automatically
         const isLogin = await isLoggedIn();
         if (isLogin) {
             console.log(isLogin)
