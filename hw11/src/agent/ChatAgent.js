@@ -50,7 +50,7 @@ const createChatAgent = () => {
     }
 
     const handleGetChatrooms = async () => {
-        return "I should respond with a list of chatrooms..."
+        return `of course, there are ${chatrooms.length} rooms: ${chatrooms.join(",")}`
     }
 
     const handleGetMessages = async (data) => {
