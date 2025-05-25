@@ -3,10 +3,10 @@ const ofRandom = (arr) => {
 }
 
 const isLoggedIn = async () => {
-    const resp = await fetch("https://cs571api.cs.wisc.edu/rest/f24/hw11/whoami", {
+    const resp = await fetch("https://cs571.org/rest/f24/hw11/whoami", {
         credentials: "include",
         headers: {
-            "X-CS571-ID": CS571.getBadgerId()
+            "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
         }
     })
     const body = await resp.json();
@@ -14,10 +14,10 @@ const isLoggedIn = async () => {
 }
 
 const getLoggedInUsername = async () => {
-    const resp = await fetch("https://cs571api.cs.wisc.edu/rest/f24/hw11/whoami", {
+    const resp = await fetch("https://cs571.org/rest/f24/hw11/whoami", {
         credentials: "include",
         headers: {
-            "X-CS571-ID": CS571.getBadgerId()
+            "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
         }
     })
     const body = await resp.json();
@@ -29,11 +29,11 @@ const getLoggedInUsername = async () => {
 }
 
 const logout = async () => {
-    await fetch("https://cs571api.cs.wisc.edu/rest/f24/hw11/logout", {
+    await fetch("https://cs571.org/rest/f24/hw11/logout", {
         method: "POST",
         credentials: "include",
         headers: {
-            "X-CS571-ID": CS571.getBadgerId()
+            "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
         }
     })
 }

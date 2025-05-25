@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/register",
+					"raw": "https://cs571.org/rest/f24/hw9/register",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -66,7 +66,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/login",
+					"raw": "https://cs571.org/rest/f24/hw9/login",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -113,7 +113,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/messages?chatroom=Bascom Hill Hangout",
+					"raw": "https://cs571.org/rest/f24/hw9/messages?chatroom=Bascom Hill Hangout",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -149,7 +149,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/messages?chatroom=Bascom Hill Hangout",
+					"raw": "https://cs571.org/rest/f24/hw9/messages?chatroom=Bascom Hill Hangout",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -185,7 +185,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/chatrooms",
+					"raw": "https://cs571.org/rest/f24/hw9/chatrooms",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -220,7 +220,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/whoami",
+					"raw": "https://cs571.org/rest/f24/hw9/whoami",
 					"protocol": "https",
 					"host": [
 						"cs571api",
@@ -255,7 +255,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://cs571api.cs.wisc.edu/rest/f24/hw9/messages?id=3688",
+					"raw": "https://cs571.org/rest/f24/hw9/messages?id=3688",
 					"protocol": "https",
 					"host": [
 						"cs571api",

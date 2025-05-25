@@ -1,7 +1,6 @@
-
 # CS571-F24 HW10: BadgerMart (Chat!)
 
-Welcome back to our final installment of BadgerMart! For this assignment, you will re-implement BadgerMart as *a chat application*. By completing this class, you will have developed a web, mobile, and chat interface for BadgerMart! 🥳🎉 
+Welcome back to our final installment of BadgerMart! For this assignment, you will re-implement BadgerMart as _a chat application_. By completing this class, you will have developed a web, mobile, and chat interface for BadgerMart! 🥳🎉
 
 ## Setup
 
@@ -14,28 +13,29 @@ npm install
 npm run dev
 ```
 
-Then, in a browser, open `localhost:5173`. You should *not* open index.html in a browser; React works differently than traditional web programming! When you save your changes, they appear in the browser automatically. I recommend using [Visual Studio Code](https://code.visualstudio.com/) to do your development work.
+Then, in a browser, open `localhost:5173`. You should _not_ open index.html in a browser; React works differently than traditional web programming! When you save your changes, they appear in the browser automatically. I recommend using [Visual Studio Code](https://code.visualstudio.com/) to do your development work.
 
 For this assignment, **you will only work on `ChatAgent.js`**. You should **not** change the React JSX components; these have been completed for you! Your focus is to solely write the code in `ChatAgent.js` that interfaces between your [Wit.AI Agent](https://wit.ai/) and the provided React frontend.
 
 ## API Notes
 
-All routes are relative to `https://cs571api.cs.wisc.edu/rest/f24/hw10/`
+All routes are relative to `https://cs571.org/rest/f24/hw10/`
 
-| Method | URL | Purpose | Return Codes |
-| --- | --- | --- | --- |
-| `GET`| `/items` | Get all items. | 200, 304 |
-| `POST` | `/checkout` | Purchases requested items and returns a purchase ID. | 200, 400 |
+| Method | URL         | Purpose                                              | Return Codes |
+| ------ | ----------- | ---------------------------------------------------- | ------------ |
+| `GET`  | `/items`    | Get all items.                                       | 200, 304     |
+| `POST` | `/checkout` | Purchases requested items and returns a purchase ID. | 200, 400     |
 
 See `API_DOCUMENTATION.md` for more details.
 
 ## Special Requirements
- - *Only* modify your Wit.AI agent and `ChatAgent.js`. Do *not* modify any of the existing `.jsx` components.
- - While you may hardcode item names as an entity of your Wit.AI agent, you may *not* hardcode item names within `ChatAgent.js`.
- - *Each* intent within your Wit.AI agent should be trained on **5+ utterances** 
-   - However, you do not need multiple responses for your intents; one response will do.
- - When `fetch`'ing data within `ChatAgent.js`, use the `async`/`await` syntax! Do not use `.then`.
- - When submitting your project, **please be sure to include a .ZIP of your Wit.AI agent!** Further instructions can be found underneath "Submission Details".
+
+- _Only_ modify your Wit.AI agent and `ChatAgent.js`. Do _not_ modify any of the existing `.jsx` components.
+- While you may hardcode item names as an entity of your Wit.AI agent, you may _not_ hardcode item names within `ChatAgent.js`.
+- _Each_ intent within your Wit.AI agent should be trained on **5+ utterances**
+  - However, you do not need multiple responses for your intents; one response will do.
+- When `fetch`'ing data within `ChatAgent.js`, use the `async`/`await` syntax! Do not use `.then`.
+- When submitting your project, **please be sure to include a .ZIP of your Wit.AI agent!** Further instructions can be found underneath "Submission Details".
 
 ## BadgerMart
 
@@ -43,7 +43,7 @@ See `API_DOCUMENTATION.md` for more details.
 
 Within `ChatAgent.js`, implement `handleInitialize` so that your chat agent welcomes the user.
 
-You may also consider initializing `availableItems` to be the data received from `https://cs571api.cs.wisc.edu/rest/f24/hw10/items` at this time. Variables such as `availableItems` are accessible by any function within `createChatAgent`.
+You may also consider initializing `availableItems` to be the data received from `https://cs571.org/rest/f24/hw10/items` at this time. Variables such as `availableItems` are accessible by any function within `createChatAgent`.
 
 ![](_figures/step1.png)
 
@@ -121,7 +121,7 @@ If the user requests to remove more items than they currently have, you should r
 
 In your Wit.AI agent, train your agent to understand a `view_cart` intent. Utterances along the lines of "view my cart", "what's in my basket", or "what do I have" should trigger this intent.
 
-Then, within `ChatAgent.js`, add logic to `handleReceive` such that if `prompt` matches the `view_cart` intent, the agent lists the items in the cart *as well as* the overall price.
+Then, within `ChatAgent.js`, add logic to `handleReceive` such that if `prompt` matches the `view_cart` intent, the agent lists the items in the cart _as well as_ the overall price.
 
 If the user's cart is empty, simply inform them as such.
 
@@ -136,9 +136,10 @@ Then, within `ChatAgent.js`, add logic to `handleReceive` such that if `prompt` 
 If the user's cart is empty, simply inform them as such.
 
 **Note:** Please pay special attention to `API_DOCUMENTATION.md`. In particular, a checkout request will be rejected if...
- - Any item name is ommitted. Item names are case-sensitive and *must* be included even if the quantity is 0.
- - Any quantity is negative or not an integer.
- - No items are ordered (e.g. a *total* quantity of 0).
+
+- Any item name is ommitted. Item names are case-sensitive and _must_ be included even if the quantity is 0.
+- Any quantity is negative or not an integer.
+- No items are ordered (e.g. a _total_ quantity of 0).
 
 ![](_figures/step9.png)
 
@@ -150,25 +151,26 @@ In addition to your code, **you will also need to submit a video recording of yo
 
 **Please embed your recording as a Kaltura video as a part of the assignment submission.** You may find [Zoom](https://support.zoom.us/hc/en-us/articles/201362473-Enabling-and-starting-local-recordings) helpful for recording your screen.
 
-#### Tasks 
- - Show the welcome message
- - Show the fallback message
- - Show the help message
- - Show all of the available items
- - Show the price for 2 items that exist
- - Attempt to show the price of an item that doesn't exist
- - Add an item to your cart
-   - View your cart
- - Add multiple of an item to your cart
-   - View your cart
- - Attempt to add an item that doesn't exist.
-   - View your cart
- - Remove an item from your cart
-   - View your cart
- - Attempt to remove more items from your cart than you currently have
-   - View your cart
- - Attempt to remove a negative number of items.
-   - View your cart
- - Successfully checkout
-   - View your cart
- - Attempt to checkout again
+#### Tasks
+
+- Show the welcome message
+- Show the fallback message
+- Show the help message
+- Show all of the available items
+- Show the price for 2 items that exist
+- Attempt to show the price of an item that doesn't exist
+- Add an item to your cart
+  - View your cart
+- Add multiple of an item to your cart
+  - View your cart
+- Attempt to add an item that doesn't exist.
+  - View your cart
+- Remove an item from your cart
+  - View your cart
+- Attempt to remove more items from your cart than you currently have
+  - View your cart
+- Attempt to remove a negative number of items.
+  - View your cart
+- Successfully checkout
+  - View your cart
+- Attempt to checkout again

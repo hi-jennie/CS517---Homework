@@ -33,7 +33,7 @@ const createChatAgent = () => {
         const hasSpecifiedNumber = promptData.entities["wit$number:number"] ? true : false;
         const numComments = hasSpecifiedNumber ? promptData.entities["wit$number:number"][0].value : 1;
 
-        const resp = await fetch(`https://cs571api.cs.wisc.edu/rest/f24/ice/comments?num=${numComments}`, {
+        const resp = await fetch(`https://cs571.org/rest/f24/ice/comments?num=${numComments}`, {
             headers: {
                 "X-CS571-ID": CS571.getBadgerId()
             }

@@ -22,7 +22,7 @@ const createLoginSubAgent = (end) => {
     }
 
     const handleReceive = async (prompt) => {
-        switch(stage) {
+        switch (stage) {
             case "FOLLOWUP_USERNAME": return await handleFollowupUsername(prompt);
             case "FOLLOWUP_PASSWORD": return await handleFollowupPassword(prompt);
         }
@@ -39,7 +39,7 @@ const createLoginSubAgent = (end) => {
 
     const handleFollowupPassword = async (prompt) => {
         password = prompt;
-        const resp = await fetch("https://cs571api.cs.wisc.edu/rest/f24/ice/login", {
+        const resp = await fetch("https://cs571.org/rest/f24/ice/login", {
             method: "POST",
             credentials: "include",
             headers: {
@@ -51,7 +51,7 @@ const createLoginSubAgent = (end) => {
                 password: password
             })
         })
-        
+
         if (resp.status === 200) {
             return end(ofRandom([
                 "Successfully logged in!",
@@ -62,7 +62,7 @@ const createLoginSubAgent = (end) => {
                 "Sorry, that username and password is incorrect.",
                 "Sorry, your username or password is incorrect.",
             ]))
-        }      
+        }
     }
 
     return {

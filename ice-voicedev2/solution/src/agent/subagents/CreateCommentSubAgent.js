@@ -20,12 +20,12 @@ const createCommentSubAgent = (end) => {
                 "You must be signed in to create a post.",
                 "Please sign in before creating a post."
             ]))
-            
+
         }
     }
 
     const handleReceive = async (prompt) => {
-        switch(stage) {
+        switch (stage) {
             case "FOLLOWUP_COMMENT": return await handleFollowupComment(prompt);
             case "FOLLOWUP_CONFIRM": return await handleFollowupConfirm(prompt);
         }
@@ -49,7 +49,7 @@ const createCommentSubAgent = (end) => {
         })
         const data = await resp.json();
         if (data.intents.length > 0 && data.intents[0].name === 'wit$confirmation') {
-            await fetch("https://cs571api.cs.wisc.edu/rest/f24/ice/comments", {
+            await fetch("https://cs571.org/rest/f24/ice/comments", {
                 method: "POST",
                 credentials: "include",
                 headers: {

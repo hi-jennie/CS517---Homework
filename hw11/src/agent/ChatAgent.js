@@ -1,16 +1,17 @@
 import createChatDelegator from "./ChatDelegator";
+import { ofRandom } from "./Util";
 
 const createChatAgent = () => {
-    const CS571_WITAI_ACCESS_TOKEN = ""; // Put your CLIENT access token here.
+    const CS571_WITAI_ACCESS_TOKEN = "EQYVVIESGF7XYHKEG6YHTD5B3QT5AMVT"; // Put your CLIENT access token here.
 
     const delegator = createChatDelegator();
 
     let chatrooms = [];
 
     const handleInitialize = async () => {
-        const resp = await fetch("https://cs571api.cs.wisc.edu/rest/f24/hw11/chatrooms", {
+        const resp = await fetch("https://cs571.org/rest/f24/hw11/chatrooms", {
             headers: {
-                "X-CS571-ID": CS571.getBadgerId()
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
             }
         });
         const data = await resp.json();
@@ -43,7 +44,9 @@ const createChatAgent = () => {
     }
 
     const handleGetHelp = async () => {
-        return "I should try to help...";
+        return ofRandom(["Try asking 'give me a list of chatrooms', or ask for more help!",
+            "Try asking 'register for an account', or ask for more help"
+        ]);
     }
 
     const handleGetChatrooms = async () => {
