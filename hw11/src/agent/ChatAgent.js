@@ -54,7 +54,24 @@ const createChatAgent = () => {
     }
 
     const handleGetMessages = async (data) => {
-        return "I should respond with a list of messages..."
+        const hasSpecifiedNumber = data.entities['wit$number:number'] ? true : false
+        const messageNum = hasSpecifiedNumber ? data.entities['wit$number:number'][0]['value'] : 1
+        const hasSpecifiedRoom = data.entities['chat_room:chat_room'] ? true : false
+        const chatRoom = hasSpecifiedRoom ? data.entities["chat_room:chat_room"][0]['value'] : "Bascom Hill Hangout";
+        // I don't know how to get the latest messages from all chatrooms, so I assign a default chatRoom.
+        const resp = await fetch(`https://cs571.org/rest/f24/hw11/messages?chatroom=${chatRoom}&num=${messageNum}`, {
+            headers: {
+                "X-CS571-ID": "bid_6fdf3569a0589bf7a2ad2e4065b73b940a57be11eaf482cbc41b9c16c9fc7e75"
+            }
+        })
+        const messagesData = await resp.json()
+        console.log(messagesData)
+        // console.log(`messagesData: ${messagesData.messages}`)
+        return messagesData.messages.map(message => {
+            return `In ${chatRoom}, ${message.poster} created a post titled ${message.title} saying ${message.content}`
+        });
+
+
     }
 
     const handleLogin = async () => {
