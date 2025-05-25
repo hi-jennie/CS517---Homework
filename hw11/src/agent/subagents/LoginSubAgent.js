@@ -7,13 +7,14 @@ const createLoginSubAgent = (end) => {
 
     const handleInitialize = async (promptData) => {
         // 在if (isLogin) 不能直接使用isLoggedIn() 应为他是一个promise
+        // It seems that after register, it will login automatically
         const isLogin = await isLoggedIn();
         if (isLogin) {
             console.log(isLogin)
-            return end("you need to be logged out before logging in")
+            return end("Login_you need to be logged out before logging in")
         } else {
             stage = "FOLLOWUP_USERNAME"
-            return ofRandom(["what's your username ?", "tell me your username"])
+            return ofRandom(["Login_what's your username ?", "Login_tell me your username"])
         }
     }
 

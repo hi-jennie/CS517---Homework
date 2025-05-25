@@ -10,6 +10,7 @@ const isLoggedIn = async () => {
         }
     })
     const body = await resp.json();
+    console.log(body)
     return body.isLoggedIn;
 }
 
