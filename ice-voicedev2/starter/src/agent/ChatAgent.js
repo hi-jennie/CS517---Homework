@@ -14,6 +14,7 @@ const createChatAgent = () => {
     }
 
     const handleReceive = async (prompt) => {
+        // 这几步是决定 prompt 的处理权是由我们自己控制还是由wit.ai 控制
         // if (stage === "FOLLOWUP_USERNAME") {
         //     username = prompt;
         //     stage = "FOLLOWUP_PASSWORD";
@@ -66,6 +67,7 @@ const createChatAgent = () => {
             }
         });
         const data = await resp.json();
+        // data is a list of object, using map convert each one to string.
         return data.map(d => `${d.comment} was posted v=by ${d.author}`);
     }
 
