@@ -65,11 +65,15 @@ const createChatAgent = () => {
             }
         })
         const messagesData = await resp.json()
-        console.log(messagesData)
-        // console.log(`messagesData: ${messagesData.messages}`)
-        return messagesData.messages.map(message => {
-            return `In ${chatRoom}, ${message.poster} created a post titled ${message.title} saying ${message.content}`
-        });
+        console.log(messagesData.messages.length)
+        if (messagesData.messages.length > 0) {
+            return messagesData.messages.map(message => {
+                return `In ${chatRoom}, ${message.poster} created a post titled ${message.title} saying ${message.content}`
+            });
+        } else {
+            return `this is no message in ${chatRoom}`
+        }
+
 
 
     }
@@ -83,7 +87,11 @@ const createChatAgent = () => {
     }
 
     const handleCreateMessage = async (data) => {
-        return await delegator.beginDelegation("CREATE");
+        const isUserLoggedIn = await isLoggedIn()
+        if (!isUserLoggedIn) {
+            return "please login first before create a post"
+        }
+        return await delegator.beginDelegation("CREATE", data);
     }
 
     const handleLogout = async () => {
