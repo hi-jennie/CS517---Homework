@@ -1,5 +1,5 @@
 import createChatDelegator from "./ChatDelegator";
-import { ofRandom } from "./Util";
+import { isLoggedIn, getLoggedInUsername, ofRandom } from "./Util";
 
 const createChatAgent = () => {
     const CS571_WITAI_ACCESS_TOKEN = "EQYVVIESGF7XYHKEG6YHTD5B3QT5AMVT"; // Put your CLIENT access token here.
@@ -91,7 +91,13 @@ const createChatAgent = () => {
     }
 
     const handleWhoAmI = async () => {
-        return "I should see who I am..."
+        const username = await getLoggedInUsername();
+        if (username) {
+            return `you are currently logged in as ${username}`;
+        } else {
+            return "You are not logged in, Please login first"
+        }
+
     }
 
     return {
