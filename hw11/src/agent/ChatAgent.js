@@ -28,6 +28,7 @@ const createChatAgent = () => {
             }
         })
         const data = await resp.json();
+        console.log(`current entity: ${data}`)
         if (data.intents.length > 0) {
             switch (data.intents[0].name) {
                 case "get_help": return handleGetHelp();
@@ -71,7 +72,7 @@ const createChatAgent = () => {
                 return `In ${chatRoom}, ${message.poster} created a post titled ${message.title} saying ${message.content}`
             });
         } else {
-            return `this is no message in ${chatRoom}`
+            return `There is no message in ${chatRoom}`
         }
 
 
