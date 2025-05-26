@@ -28,7 +28,7 @@ const createLoginSubAgent = (end) => {
     const handleFollowupUsername = async (prompt) => {
         username = prompt;
         stage = "FOLLOWUP_PASSWORD";
-        return ofRandom(["Great, what's your password?", " How about your password"]);
+        return { msg: "Great, what's your password?", nextIsSensitive: true }
     }
 
     const handleFollowupPassword = async (prompt) => {
@@ -48,9 +48,9 @@ const createLoginSubAgent = (end) => {
             })
         })
         if (res.status === 200) {
-            return end("Login successful!");
+            return end({ msg: "login successfully", emote: "SUCCESS" });
         } else {
-            return end("Login failed, please check your credentials and try again.");
+            return end({ msg: "Login failed, please check your credentials and try again.", emote: "error" });
         }
     }
 

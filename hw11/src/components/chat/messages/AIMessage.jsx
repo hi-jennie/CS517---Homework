@@ -1,8 +1,8 @@
 import { Col } from "react-bootstrap";
-import Bucki from '../../../assets/bucki.png'
-import Bucki_Error from '../../../assets/bucki_error.png'
-import Bucki_Success from '../../../assets/bucki_success.png'
-import { FaRegPlayCircle  } from "react-icons/fa";
+import Bucki from "../../../assets/bucki.png";
+import Bucki_Error from "../../../assets/bucki_error.png";
+import Bucki_Success from "../../../assets/bucki_success.png";
+import { FaRegPlayCircle } from "react-icons/fa";
 
 import AIEmoteType from "./AIEmoteType";
 import { useRef, useState, useEffect, useContext } from "react";
@@ -10,56 +10,93 @@ import { ClipLoader } from "react-spinners";
 import { IoCodeDownload } from "react-icons/io5";
 import ChatContext from "../../../contexts/ChatContext";
 
-
 export default function AIMessage(props) {
+  const { chatSynthesizer } = useContext(ChatContext);
 
-    const { chatSynthesizer } = useContext(ChatContext);
+  const audioControlsRef = useRef();
+  const [isWaitingForAudio, setIsWaitingForAudio] = useState(false);
+  const [audioURL, setAudioURL] = useState();
 
-    const audioControlsRef = useRef();
-    const [isWaitingForAudio, setIsWaitingForAudio] = useState(false);
-    const [audioURL, setAudioURL] = useState();
+  // 如果 audioURL 是 undefined，也就是还没有音频下载链接：
+  // playAudio() 会调用 chatSynthesizer.handleSynthesis(props.text) 来请求音频；
+  // 等音频生成后，会把音频链接 data 存入 audioURL；
+  // 下次点击时就可以直接播放音频了（不再请求）。
 
-    async function playAudio () {
-        if (audioURL) {
-            audioControlsRef.current.play();
-        } else {
-            setIsWaitingForAudio(true);
-            const data = await chatSynthesizer.handleSynthesis(props.text);
-            setIsWaitingForAudio(false);
-            setAudioURL(data); 
-        }
+  async function playAudio() {
+    if (audioURL) {
+      audioControlsRef.current.play();
+    } else {
+      setIsWaitingForAudio(true);
+      const data = await chatSynthesizer.handleSynthesis(props.text);
+      setIsWaitingForAudio(false);
+      setAudioURL(data);
     }
+  }
 
-    return <Col
-        style={{width: "fit-content", maxWidth: "66.6666667%", display: "flex"}}
-        xs={8}>
-            <div style={{cursor: isWaitingForAudio || !props.text || props.text.length >= 280 ? "" : "pointer"}} onClick={() => props.text?.length < 280 ? playAudio() : undefined}>
-                {
-                    (() => {
-                        switch(props.emote) {
-                            case AIEmoteType.NORMAL:
-                                return <img src={Bucki} style={{width: 32, height: 32}} alt="Bucki the Badger"/>
-                            case AIEmoteType.ERROR:
-                                return <img src={Bucki_Error} style={{width: 32, height: 32}} alt="Bucki the Badger (Error)"/>
-                            case AIEmoteType.SUCCESS:
-                                return <img src={Bucki_Success} style={{width: 32, height: 32}} alt="Bucki the Badger (Success)"/>
-                        }
-                    })()
-                }
-                {
-                    props.text?.length < 280 && <>
-                        <br/>
-                        <div style={{float: "right", marginTop: "-0.75rem"}}>
-                        {isWaitingForAudio ? <ClipLoader size={16} color="#36d7b7" /> : (audioURL ? <FaRegPlayCircle/> : <IoCodeDownload />)}
-                        <audio ref={audioControlsRef} src={audioURL} style={{display: "hidden"}} />
-                        </div>
-                    </>
-                }
+  return (
+    <Col
+      style={{ width: "fit-content", maxWidth: "66.6666667%", display: "flex" }}
+      xs={8}
+    >
+      <div
+        style={{
+          cursor:
+            isWaitingForAudio || !props.text || props.text.length >= 280
+              ? ""
+              : "pointer",
+        }}
+        onClick={() => (props.text?.length < 280 ? playAudio() : undefined)}
+      >
+        {(() => {
+          switch (props.emote) {
+            case AIEmoteType.NORMAL:
+              return (
+                <img
+                  src={Bucki}
+                  style={{ width: 32, height: 32 }}
+                  alt="Bucki the Badger"
+                />
+              );
+            case AIEmoteType.ERROR:
+              return (
+                <img
+                  src={Bucki_Error}
+                  style={{ width: 32, height: 32 }}
+                  alt="Bucki the Badger (Error)"
+                />
+              );
+            case AIEmoteType.SUCCESS:
+              return (
+                <img
+                  src={Bucki_Success}
+                  style={{ width: 32, height: 32 }}
+                  alt="Bucki the Badger (Success)"
+                />
+              );
+          }
+        })()}
+        {props.text?.length < 280 && (
+          <>
+            <br />
+            <div style={{ float: "right", marginTop: "-0.75rem" }}>
+              {isWaitingForAudio ? (
+                <ClipLoader size={16} color="#36d7b7" />
+              ) : audioURL ? (
+                <FaRegPlayCircle />
+              ) : (
+                <IoCodeDownload />
+              )}
+              <audio
+                ref={audioControlsRef}
+                src={audioURL}
+                style={{ display: "hidden" }}
+              />
             </div>
-            
-            <div className="ai-message">
-                {props.children}
-            </div>
-        
+          </>
+        )}
+      </div>
+
+      <div className="ai-message">{props.children}</div>
     </Col>
+  );
 }

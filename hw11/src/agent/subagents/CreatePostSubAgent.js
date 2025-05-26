@@ -67,9 +67,9 @@ const createPostSubAgent = (end) => {
                 })
             })
             if (res.status === 200) {
-                return end(ofRandom(["Comment posted successfully!", "Comment posted!", "Comment posted! Thanks for your feedback!"]));
+                return end({ msg: "comment posted successfully", emote: "SUCCESS" });
             } else {
-                return end(ofRandom(["Comment failed to post, please try again.", "Comment failed to post, please try again."]));
+                return end({ msg: "Comment failed to post, please try again.", emote: "error" });
             }
         } else {
             return end(ofRandom(["No worries, if you want yo create a comment in the future, just let me know!", "that's all right, if you want to create a comment , just ask"]));

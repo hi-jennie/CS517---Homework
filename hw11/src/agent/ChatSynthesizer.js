@@ -1,5 +1,5 @@
 const createChatSynthesizer = () => {
-    const CS571_WITAI_ACCESS_TOKEN = ""; // Put your CLIENT access token here.
+    const CS571_WITAI_ACCESS_TOKEN = "EQYVVIESGF7XYHKEG6YHTD5B3QT5AMVT"; // Put your CLIENT access token here.
 
     const handleTranscription = async (rawSound, contentType) => {
         const resp = await fetch(`https://api.wit.ai/dictation`, {

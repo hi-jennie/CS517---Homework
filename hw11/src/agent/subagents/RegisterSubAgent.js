@@ -28,13 +28,14 @@ const createRegisterSubAgent = (end) => {
     const handleFollowupUsername = async (prompt) => {
         username = prompt;
         stage = "FOLLOWUP_PASSWORD";
-        return ofRandom(["register_Enter your password", "register_Type your password"]);
+        return { msg: "register_Enter your password", nextIsSensitive: true }
     }
 
     const handleFollowupPassword = async (prompt) => {
         password = prompt;
         stage = "FOLLOWUP_CONF";
-        return ofRandom(["register_Enter your password again", "register_Type your password again"]);
+        return { msg: "register_Enter your password again", nextIsSensitive: true }
+
     }
 
     const handleFollowupConf = async (prompt) => {
@@ -58,11 +59,11 @@ const createRegisterSubAgent = (end) => {
                 })
             })
             if (resp.status === 200) {
-                return end("register successful!")
+                return end({ msg: "register successfully", emote: "SUCCESS" })
             } else {
                 const returnData = await resp.json();
                 console.log(returnData)
-                return end(returnData.msg)
+                return end({ msg: returnData.msg, emote: "error" })
             }
         }
 
